@@ -1,0 +1,206 @@
+{% extends "mainpages/page-layout.html" %}
+{% block title %}Pilares IL6S{% endblock %}
+{% block contenido %}
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header bg-transparent">
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="mb-0">
+                                <span class="badge badge-warning">Site IL6S Pilares</span> -
+                                Menu Pilares IL6S:
+                            </h3>
+                        </div>
+                        <div class="col text-right">
+                            <a href="{{url_for('menus.menu_inicio')}}" class="btn btn-sm btn-primary">Regresar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- INICIO CARD DE INICIO -->
+                        <div class="col-xl-3">
+                            <div class="card" style="width: 18rem;">
+                            <a href="{{url_for('pizarron_lead.menu_pilares_lead')}}">
+                                <div class="card-header bg-transparent">
+                                    <div class="row">
+                                        <div class="col" align="center">
+                                            <h5 class="h3 text-muted mb-0">Liderazgo</h5><br>
+                                            <img src="{{url_for('.static',filename='Pilares/lead.png')}}" style="width:140px;height:110px;" data-toggle="tooltip" data-placement="right" title="LEAD"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="card" style="width: 18rem;">
+                            <a href="{{url_for('pizarron_org.menu_pilares_org')}}">
+                                <div class="card-header bg-transparent">
+                                    <div class="row">
+                                        <div class="col" align="center">
+                                            <h5 class="h3 text-muted mb-0">Organización</h5><br>
+                                            <img src="{{url_for('.static',filename='Pilares/org.png')}}" style="width:140px;height:110px;" data-toggle="tooltip" data-placement="right" title="ORG"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="card" style="width: 18rem;">
+                            <a href="{{url_for('pizarron_fi.menu_pilares_fi')}}">
+                                <div class="card-header bg-transparent">
+                                    <div class="row">
+                                        <div class="col" align="center">
+                                            <h5 class="h3 text-muted mb-0">Mejora Enfocada</h5><br>
+                                            <img src="{{url_for('.static',filename='Pilares/fi.png')}}" style="width:140px;height:110px;" data-toggle="tooltip" data-placement="right" title="FI"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="card" style="width: 18rem;">
+                            <a href="{{url_for('pizarron_am.menu_pilares_am')}}">
+                                <div class="card-header bg-transparent">
+                                    <div class="row">
+                                        <div class="col" align="center">
+                                            <h5 class="h3 text-muted mb-0">Mantenimiento Autónomo</h5><br>
+                                            <img src="{{url_for('.static',filename='Pilares/am.png')}}" style="width:140px;height:110px;" data-toggle="tooltip" data-placement="right" title="AM"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3">
+                            <div class="card" style="width: 18rem;">
+                            <a href="{{url_for('pizarron_pm.menu_pilares_pm')}}">
+                                <div class="card-header bg-transparent">
+                                    <div class="row">
+                                        <div class="col" align="center">
+                                            <h5 class="h3 text-muted mb-0">Mantenimiento Progresivo</h5><br>
+                                            <img src="{{url_for('.static',filename='Pilares/pm.png')}}" style="width:140px;height:110px;" data-toggle="tooltip" data-placement="right" title="PM"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="card" style="width: 18rem;">
+                            <a href="{{url_for('pizarron_qm.menu_pilares_qm')}}">
+                                <div class="card-header bg-transparent">
+                                    <div class="row">
+                                        <div class="col" align="center">
+                                            <h5 class="h3 text-muted mb-0">Mantenimiento de la Calidad</h5><br>
+                                            <img src="{{url_for('.static',filename='Pilares/qm.png')}}" style="width:140px;height:110px;" data-toggle="tooltip" data-placement="right" title="QM"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="card" style="width: 18rem;">
+                            <a href="{{url_for('pizarron_iim.menu_pilares_iim')}}">
+                                <div class="card-header bg-transparent">
+                                    <div class="row">
+                                        <div class="col" align="center">
+                                            <h5 class="h3 text-muted mb-0">Administración de las Iniciativas e Innovaciones</h5><br>
+                                            <img src="{{url_for('.static',filename='Pilares/iim.png')}}" style="width:140px;height:110px;" data-toggle="tooltip" data-placement="right" title="IIM"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="card" style="width: 18rem;">
+                            <a href="{{url_for('pizarron_wpi.menu_pilares_wpi')}}">
+                                <div class="card-header bg-transparent">
+                                    <div class="row">
+                                        <div class="col" align="center">
+                                            <h5 class="h3 text-muted mb-0">Mejora de los Procesos de Trabajo</h5><br>
+                                            <img src="{{url_for('.static',filename='Pilares/wpi.png')}}" style="width:140px;height:110px;" data-toggle="tooltip" data-placement="right" title="WPI"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3">
+                            <div class="card" style="width: 18rem;">
+                            <a href="{{url_for('pizarron_eyt.menu_pilares_eyt')}}">
+                                <div class="card-header bg-transparent">
+                                    <div class="row">
+                                        <div class="col" align="center">
+                                            <h5 class="h3 text-muted mb-0">Educación y Entrenamiento</h5><br>
+                                            <img src="{{url_for('.static',filename='Pilares/eyt.png')}}" style="width:140px;height:110px;" data-toggle="tooltip" data-placement="right" title="E&T"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="card" style="width: 18rem;">
+                            <a href="{{url_for('pizarron_hse.menu_pilares_hse')}}">
+                                <div class="card-header bg-transparent">
+                                    <div class="row">
+                                        <div class="col" align="center">
+                                            <h5 class="h3 text-muted mb-0">Seguridad, Salud y Medio Ambiente</h5><br>
+                                            <img src="{{url_for('.static',filename='Pilares/hse.png')}}" style="width:140px;height:110px;" data-toggle="tooltip" data-placement="right" title="HSE"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="card" style="width: 18rem;">
+                            <a href="{{url_for('pizarron_sn.menu_pilares_sn')}}">
+                                <div class="card-header bg-transparent">
+                                    <div class="row">
+                                        <div class="col" align="center">
+                                            <h5 class="h3 text-muted mb-0">Cadena de Suministro</h5><br>
+                                            <img src="{{url_for('.static',filename='Pilares/sn.png')}}" style="width:140px;height:110px;" data-toggle="tooltip" data-placement="right" title="SN"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            </div>
+                        </div>
+                        <!-- FIN  -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer pt-0">
+        <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6">
+                <div class="copyright text-center  text-lg-left  text-muted">
+                    &copy; 2021 <a href="" class="font-weight-bold ml-1" target="_blank">Mondelez</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                    <li class="nav-item">
+                        <a href="" class="nav-link" target="_blank">Dashboard</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+<!-- FIN CONTENIDO -->
+{% endblock %}

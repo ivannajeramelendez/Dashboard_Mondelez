@@ -1,0 +1,340 @@
+{% extends "layout.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block contenido %}
+<!-- INICIO HEAD TARJETAS -->
+  <div class="header bg-primary pb-6">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row">
+
+          <div class="col-xl-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Cto's</h5>
+                    <span class="h4 font-weight-bold mb-0">{{cto_totales|length}} - Registros</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                      <i class="far fa-file-alt"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Usuarios</h5>
+                    <span class="h4 font-weight-bold mb-0">{{usuarios_totales|length}} - Registros</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                      <i class="fas fa-user-plus"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Sku</h5>
+                    <span class="h4 font-weight-bold mb-0">{{sku_totales|length}} - Registros</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                      <i class="fas fa-barcode"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Lineas</h5>
+                    <span class="h4 font-weight-bold mb-0">{{lineas_totales|length}} - Registros</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                      <i class="fas fa-bezier-curve"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- FIN HEAD TARJETAS -->
+<!-- Page content -->
+  <div class="container-fluid mt--6">
+    <div class="row">
+
+      <div class="col-xl-7">
+        <div class="card">
+          <div class="card-header border-0">
+            <div class="row">
+              <div class="col">
+                <h3 class="mb-0">Notificación</h3>
+              </div>
+              <div class="col text-right">
+                <a href="#" class="btn btn-sm btn-primary">Ver todos</a>
+              </div>
+            </div>
+          </div>
+          <div class="card table-responsive">
+            <!-- Projects table -->
+            <table class="table table-sm">
+              <thead class="table-dark">
+                <tr align="center">
+                  <th>N°</th>
+                  <th>Nombre</th>
+                  <th>Tema</th>
+                  <th>Fecha</th>
+                  <th>Tipo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for noti in noti %}
+                <tr align="center">
+                  <td>{{noti.numero}}</td>
+                  <td>{{noti.nombre}}</td>
+                  <td>{{noti.notificacion}}</td>
+                  <td>{{noti.fecha}}</td>
+                  <td><i class="fas fa-exclamation-circle {{noti.tipo}}"></i></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-5">
+        <div class="card">
+          <div class="card-header border-0">
+            <div class="row">
+              <div class="col">
+                <h3 class="mb-0">Modos de Fallo</h3>
+              </div>
+              <div class="col text-right">
+                <a href="#" class="btn btn-sm btn-primary">Ver todos</a>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <!-- Projects table -->
+            <table class="table table-sm">
+              <thead class="table-dark">
+                <tr align="center">
+                  <th>Numero</th>
+                  <th>Falla</th>
+                  <th>Perdida GWF</th>
+                  <th>Planta</th>
+                  <th>Linea</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for Cto in cto %}
+                <tr align="center">
+                  <td>{{Cto.numero}}</td>
+                  <th>{{Cto.falla}}</th>
+                  <th>{{Cto.perdida}}</th>
+                  <th>Puebla</th>
+                  <th>{{Cto.linea}}</th>
+                </tr>
+                {% endfor %}
+                {% for Cto in cto2 %}
+                <tr align="center">
+                  <td>{{Cto.numero}}</td>
+                  <th>{{Cto.falla}}</th>
+                  <th>{{Cto.perdida}}</th>
+                  <th>Puebla</th>
+                  <th>{{Cto.linea}}</th>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-12">
+        <div class="card">
+          <div class="card-header border-0">
+            <div class="row">
+              <div class="col">
+                <h3 class="mb-0">Cto Caputrados</h3>
+              </div>
+              <div class="col text-right">
+                <a href="#" class="btn btn-sm btn-primary">Ver todos</a>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <!-- Projects table -->
+            <table class="table table-sm">
+              <thead class="table-dark">
+                <tr align="center">
+                  <th>Sku</th>
+                  <th>Producto</th>
+                  <th>Maquina</th>
+                  <th>Kg Min</th>
+                  <th>Ea Min</th>
+                  <th>Descripción</th>
+                  <th>BUoM</th>
+                  <th>Linea</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for Sku in sku %}
+                <tr align="center">
+                  <td>{{Sku.sku}}</td>
+                  <th>{{Sku.producto}}</th>
+                  <td>{{Sku.maquina}}</td>
+                  <td>{{Sku.kg_min}}</td>
+                  <td>{{Sku.ea_min}}</td>
+                  <td>{{Sku.descripcion}}</td>
+                  <td>{{Sku.buom_descripcion}}</td>
+                  <td>{{Sku.linea}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-5">
+        <div class="card">
+          <div class="card-header border-0">
+            <div class="row">
+              <div class="col">
+                <h3 class="mb-0">Usuarios</h3>
+              </div>
+              <div class="col text-right">
+                <a href="#" class="btn btn-sm btn-primary">Ver todos</a>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <!-- Projects table -->
+            <table class="table table-sm" id="search_box">
+              <thead class="table-dark">
+                <tr align="center">
+                  <th>Username</th>
+                  <th>Nombre</th>
+                  <th>Correo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for User in user %}
+                <tr align="center">
+                  <td>{{User.username}}</td>
+                  <td>{{User.nombre}}</td>
+                  <td>{{User.email}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-7">
+        <div class="card">
+          <div class="card-header border-0">
+            <div class="row">
+              <div class="col">
+                <h3 class="mb-0">Cto Caputrados</h3>
+              </div>
+              <div class="col text-right">
+                <a href="#" class="btn btn-sm btn-primary">Ver todos</a>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <!-- Projects table -->
+            <table class="table table-sm table-flush">
+              <thead class="table-dark">
+                <tr>
+                  <th>Fecha</th>
+                  <th>Linea</th>
+                  <th>Area</th>
+                  <th>Ge</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for Cto in cto %}
+                <tr>
+                  <th scope="row">
+                    {{Cto.fecha}}
+                  </th>
+                  <td>
+                    {{Cto.linea}}
+                  </td>
+                  <td>
+                    {{Cto.area}}
+                  </td>
+                  <td>
+                    <i class="fas fa-arrow-up text-success mr-3"></i> {{Cto.ge}}%
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer pt-0">
+      <div class="row align-items-center justify-content-lg-between">
+        <div class="col-lg-6">
+          <div class="copyright text-center  text-lg-left  text-muted">
+            &copy; 2021
+            <a href="" class="font-weight-bold ml-1" target="_blank">Mondelez</a>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <ul
+            class="nav nav-footer justify-content-center justify-content-lg-end"
+          >
+            <li class="nav-item">
+              <a href="" class="nav-link" target="_blank"></a>
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link" target="_blank"></a>
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link" target="_blank"></a>
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link" target="_blank">Mondelez</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </div>
+{% endblock %}

@@ -1,0 +1,269 @@
+{% extends "mainpages/layout.html" %}
+{% block title %}CTO's Entradas{% endblock %}
+{% block content %}
+<!-- Page content -->
+<div class="container-fluid mt--6">
+  <div class="row justify-content-center">
+    <div class="col">
+      <div class="card">
+        <div class="card-header bg-transparent">
+          <div class="row align-items-center">
+              <div class="col">
+                  <h3 class="mb-0"><span class="badge badge-warning">Entradas</span> - Seleciona la Linea de CTO's:</h3>
+              </div>
+              <div class="col text-right">
+                  <a href="{{url_for('menus.menu_inicio_ctos')}}" class="btn btn-sm btn-primary">Regresar</a>
+              </div>
+          </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="header-body">
+              <div class="row align-items-center py-4">
+              </div>
+              <div class="row">
+
+                <div class="col-xl-3 col-md-6">
+                  <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col">
+                          <span class="h2 font-weight-bold mb-0">Trident Slab</span>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-file-alt text-warning"></i>
+                        </div>
+                      </div>
+                      <br>
+                      <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Linea
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                          <h6 class="dropdown-header text-center text-warning">Slab 1's</h6>
+                          <a class="dropdown-item" href="{{url_for('ctos.cto_proto_2')}}">Bosch 1</a>
+                          <a class="dropdown-item" href="{{url_for('ctos.cto_slab_1s_bosch_2')}}">Bosch 2</a>
+                          <h6 class="dropdown-header text-center text-warning">Slab 6's</h6>
+                          <a class="dropdown-item" href="{{url_for('ctos.cto_slab_6s_prototipo_l1')}}">Linea 1</a>
+                          <a class="dropdown-item" href="{{url_for('ctos.cto_slab_6s_prototipo_l2')}}">Linea 2</a>
+                          <a class="dropdown-item" href="{{url_for('ctos.cto_slab_6s_prototipo_l3')}}">Linea 3</a>
+                          <a class="dropdown-item" href="{{url_for('ctos.cto_slab_6s_prototipo_l4')}}">Linea 4</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                  <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col">
+                          <span class="h2 font-weight-bold mb-0">Bubbalo</span>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-file-alt text-primary"></i>
+                        </div>
+                      </div>
+                      <p class="mt-3 mb-0 text-sm">
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Próximamente"><span class="badge badge-light">Próximamente</span></a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                  <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col">
+                          <span class="h2 font-weight-bold mb-0">EVUP</span>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-file-alt text-primary"></i>
+                        </div>
+                      </div>
+                      <p class="mt-3 mb-0 text-sm">
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Próximamente"><span class="badge badge-light">Próximamente</span></a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                  <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col">
+                          <span class="h2 font-weight-bold mb-0">Halls 1s</span>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-file-alt text-primary"></i>
+                        </div>
+                      </div>
+                      <p class="mt-3 mb-0 text-sm">
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Próximamente"><span class="badge badge-light">Próximamente</span></a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6">
+                  <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col">
+                          <span class="h2 font-weight-bold mb-0">CFP Blister</span>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-file-alt text-primary"></i>
+                        </div>
+                      </div>
+                      <p class="mt-3 mb-0 text-sm">
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Próximamente"><span class="badge badge-light">Próximamente</span></a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                  <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col">
+                          <span class="h2 font-weight-bold mb-0">CLG</span>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-file-alt text-primary"></i>
+                        </div>
+                      </div>
+                      <p class="mt-3 mb-0 text-sm">
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Próximamente"><span class="badge badge-light">Próximamente</span></a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                  <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col">
+                          <span class="h2 font-weight-bold mb-0">SFP Blister</span>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-file-alt text-primary"></i>
+                        </div>
+                      </div>
+                      <p class="mt-3 mb-0 text-sm">
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Próximamente"><span class="badge badge-light">Próximamente</span></a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                  <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col">
+                          <span class="h2 font-weight-bold mb-0">Halls Stick</span>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-file-alt text-primary"></i>
+                        </div>
+                      </div>
+                      <p class="mt-3 mb-0 text-sm">
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Próximamente"><span class="badge badge-light">Próximamente</span></a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6">
+                  <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col">
+                          <span class="h2 font-weight-bold mb-0">Sugar Pellet Empaque</span>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-file-alt text-primary"></i>
+                        </div>
+                      </div>
+                      <p class="mt-3 mb-0 text-sm">
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Próximamente"><span class="badge badge-light">Próximamente</span></a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                  <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col">
+                          <span class="h2 font-weight-bold mb-0">Trident 4s</span>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-file-alt text-primary"></i>
+                        </div>
+                      </div>
+                      <p class="mt-3 mb-0 text-sm">
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Próximamente"><span class="badge badge-light">Próximamente</span></a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                  <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col">
+                          <span class="h2 font-weight-bold mb-0">PBs Empaque</span>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-file-alt text-primary"></i>
+                        </div>
+                      </div>
+                      <p class="mt-3 mb-0 text-sm">
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Próximamente"><span class="badge badge-light">Próximamente</span></a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer class="footer pt-0">
+    <div class="row align-items-center justify-content-lg-between">
+      <div class="col-lg-6">
+        <div class="copyright text-center  text-lg-left  text-muted">
+          &copy; 2021
+          <a href="" class="font-weight-bold ml-1" target="_blank">Mondelez</a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <ul
+          class="nav nav-footer justify-content-center justify-content-lg-end"
+        >
+          <li class="nav-item">
+            <a href="" class="nav-link" target="_blank">Dashboard</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+{% endblock %}

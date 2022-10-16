@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block contenido %}
+<!-- INICIO HEAD TARJETAS -->
+  <div class="header bg-primary pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+          </div>
+        </div>
+      </div>
+  </div>
+<!-- FIN HEAD TARJETAS -->
+<!-- Page content -->
+  <div class="container-fluid mt--6">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card">
+          <div class="card-header border-0">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="mb-0">Empleados Registrados</h3>
+              </div>
+              <div class="col text-right">
+                {% if current_user.is_admin() %}
+                <a href="#" class="btn btn-sm btn-secondary" data-toggle="tooltip" data-placement="top" title="Próximamente">Nuevo Empleado</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <!-- Tabla Usuarios -->
+            <table class="table" id="search_box">
+              <thead class="table-dark">
+                <tr align="center">
+                  <th>N° de Empleado</th>
+                  <th>Nombre de Empleado</th>
+                  {% if current_user.is_authenticated and current_user.is_admin() %}
+                  <th>Editar</th>
+                  {% endif %}
+                </tr>
+              </thead>
+              <tbody>
+                {% for Empleado in empleados %}
+                <tr align="center">
+                  <td>{{Empleado.NumeroEmpleadoMondelez}}</td>
+                  <th>{{Empleado.NombreEmpleadoMondelez}}</th>
+                  {% if current_user.is_authenticated and current_user.is_admin() %}
+                  <td><a href="#" type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Próximamente">Editar</a></td>
+                  {% endif %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer pt-0">
+      <div class="row align-items-center justify-content-lg-between">
+        <div class="col-lg-6">
+          <div class="copyright text-center  text-lg-left  text-muted">
+            &copy; 2021
+            <a href="" class="font-weight-bold ml-1" target="_blank">Mondelez</a>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <ul
+            class="nav nav-footer justify-content-center justify-content-lg-end"
+          >
+            <li class="nav-item">
+              <a href="" class="nav-link" target="_blank"></a>
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link" target="_blank"></a>
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link" target="_blank"></a>
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link" target="_blank">Mondelez</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </div>
+{% endblock %}

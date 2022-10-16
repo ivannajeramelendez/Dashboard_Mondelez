@@ -1,0 +1,472 @@
+{% extends "consultas/layout_ge.html" %}
+{% block title %}CTO's Dashboard - Ge{% endblock %}
+{% block content %}
+<!-- Page content -->
+<div class="container-fluid mt--4">
+  <div class="row justify-content-center">
+    <div class=" col ">
+      <div class="card">
+        <div class="card-header bg-transparent">
+          <div class="row align-items-center">
+            <div class="col">
+              <h3 class="mb-0">
+                <span class="badge badge-warning">Dashboard</span> - GE
+              </h3>
+            </div>
+            <div class="col text-right">
+              <a href="{{url_for('menus.menu_inicio_ctos')}}" class="btn btn-sm btn-primary">Regresar</a>
+              {% if current_user.is_admin() %}
+              <!-- <a href="#" id="exportar" data-export="export" class="btn btn-sm btn-success">Exportar</a> -->
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- INICIO GRAFICOS -->
+        <div class="col-xl-12">
+          <form>
+            <div class="card bg-transparent">
+              <div class="card-header bg-transparent">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="h3 text-dark text-muted mb-0"><span class="badge badge-success">Filtro</span></h5>
+                  </div>
+                  <div class="col text-right">
+                    <input type="reset" value="Limpiar Filtro" class="btn btn-sm btn-warning">
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-body">
+                <table style="width: 67%; margin: 0 auto 2em auto;">
+                  <thead align="center">
+                    <tr>
+                      <th>Selección</th>
+                      <th>Busqueda</th>
+                    </tr>
+                  </thead>
+                  <tbody align="center">
+                    <tr>
+                      <td>Planta</td>
+                      <td><input type="text" id="filtro_planta" list="lista_planta"
+                          class="form-control form-control-sm custom-select"></td>
+                      <datalist id="lista_planta">
+                        <option value="Puebla">
+                      </datalist>
+                    </tr>
+                    <tr>
+                      <td>Area</td>
+                      <td><input type="text" id="filtro_area" list="lista_area"
+                          class="form-control form-control-sm custom-select"></td>
+                      <datalist id="lista_area">
+                        <option value="Slab">
+                      </datalist>
+                    </tr>
+                    <tr>
+                      <td>Linea</td>
+                      <td><input type="text" id="filtro_linea" list="lista_linea"
+                          class="form-control form-control-sm custom-select"></td>
+                      <datalist id="lista_linea">
+                        <option value="Slab 1s">
+                        <option value="Slab 6s">
+                      </datalist>
+                    </tr>
+                    <tr>
+                      <td>Turno</td>
+                      <td><input type="text" id="filtro_turno" list="lista_turno"
+                          class="form-control form-control-sm custom-select"></td>
+                      <datalist id="lista_turno">
+                        <option value="1er">
+                        <option value="2do">
+                        <option value="3er">
+                      </datalist>
+                    </tr>
+                    <tr>
+                      <td>Fecha</td>
+                      <td><input type="date" id="busqueda_input" class="form-control form-control-sm" /></td>
+                    </tr>
+                    <!-- <tr>
+                      <td>Fecha Fin</td>
+                      <td><input type="date" id="busqueda_fin_input" class="form-control form-control-sm" /></td>
+                    </tr> -->
+                  </tbody>
+                </table>
+                <div class="col text-right">
+                  <a class="btn btn-sm btn-warning" data-toggle="collapse" href="#collapseExample">Buscar</a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="col-xl-12" >
+          <div class="card bg-transparent">
+            <div class="card-header bg-transparent">
+              <div class="row">
+                <div class="col">
+                  <h5 class="h3 text-dark text-muted mb-0"><span class="badge badge-success">Mapa de Filtro</span>
+                  </h5>
+                </div>
+                <div class="col text-right">
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <table id="data_reporte_del_turno" hidden>
+                <thead>
+                  <tr>
+                    <th>Planta</th>
+                    <th>Area</th>
+                    <th>Linea</th>
+                    <th>Maquina</th>
+                    <th>Turno</th>
+                    <th>Sección</th>
+                    <th>Año</th>
+                    <th>Fecha</th>
+                    <th>Producto</th>
+                    <th>Quality Loss</th>
+                    <th>Speed Loss</th>
+                    <th>T. Max</th>
+                    <th>T. Usado</th>
+                    <th>T. Prod</th>
+                    <th>Ge</th>
+                    <th>Modo de Falla</th>
+                    <th>Frecuencia</th>
+                    <th>Minutos</th>
+                    <th>Tg</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for Paros in paros %}
+                  <tr>
+                    <td>{{Paros.planta}}</td>
+                    <td>{{Paros.area}}</td>
+                    <td>{{Paros.linea_cto}}</td>
+                    <td>{{Paros.maquina}}</td>
+                    <td>{{Paros.turno}}</td>
+                    <td>{{Paros.seccion}}</td>
+                    <td>{{Paros.year}}</td>
+                    <td>{{(Paros.fecha)}}</td>
+                    <td>{{Paros.sku}}</td>
+                    <td>{{"{:.0f}".format(Paros.quality_loss)}}</td>
+                    <td>{{"{:.0f}".format(Paros.speed_loss)}}</td>
+                    <td>{{Paros.tiempo_maximo}}</td>
+                    <td>{{Paros.tiempo_usado}}</td>
+                    <td>{{"{:.0f}".format(Paros.tiempo_operativo)}}</td>
+                    <td>{{Paros.ge}}</td>
+                    <td>{{Paros.falla}}</td>
+                    <td>{{Paros.frec}}</td>
+                    <td>{{"{:.0f}".format(Paros.total)}}</td>
+                    <td>100</td>
+                  </tr>
+                  {% endfor %}
+                  {% for Paros in linea_2 %}
+                  <tr>
+                    <td>{{Paros.planta}}</td>
+                    <td>{{Paros.area}}</td>
+                    <td>{{Paros.linea_cto}}</td>
+                    <td>{{Paros.maquina}}</td>
+                    <td>{{Paros.turno}}</td>
+                    <td>{{Paros.seccion}}</td>
+                    <td>{{Paros.year}}</td>
+                    <td>{{(Paros.fecha)}}</td>
+                    <td>{{Paros.sku}}</td>
+                    <td>{{"{:.0f}".format(Paros.quality_loss)}}</td>
+                    <td>{{"{:.0f}".format(Paros.speed_loss)}}</td>
+                    <td>{{Paros.tiempo_maximo}}</td>
+                    <td>{{Paros.tiempo_usado}}</td>
+                    <td>{{"{:.0f}".format(Paros.tiempo_operativo)}}</td>
+                    <td>{{Paros.ge}}</td>
+                    <td>{{Paros.falla}}</td>
+                    <td>{{Paros.frec}}</td>
+                    <td>{{"{:.0f}".format(Paros.total)}}</td>
+                    <td>100</td>
+                  </tr>
+                  {% endfor %} {% for Paros in linea_3 %}
+                  <tr>
+                    <td>{{Paros.planta}}</td>
+                    <td>{{Paros.area}}</td>
+                    <td>{{Paros.linea_cto}}</td>
+                    <td>{{Paros.maquina}}</td>
+                    <td>{{Paros.turno}}</td>
+                    <td>{{Paros.seccion}}</td>
+                    <td>{{Paros.year}}</td>
+                    <td>{{(Paros.fecha)}}</td>
+                    <td>{{Paros.sku}}</td>
+                    <td>{{"{:.0f}".format(Paros.quality_loss)}}</td>
+                    <td>{{"{:.0f}".format(Paros.speed_loss)}}</td>
+                    <td>{{Paros.tiempo_maximo}}</td>
+                    <td>{{Paros.tiempo_usado}}</td>
+                    <td>{{"{:.0f}".format(Paros.tiempo_operativo)}}</td>
+                    <td>{{Paros.ge}}</td>
+                    <td>{{Paros.falla}}</td>
+                    <td>{{Paros.frec}}</td>
+                    <td>{{"{:.0f}".format(Paros.total)}}</td>
+                    <td>100</td>
+                  </tr>
+                  {% endfor %} {% for Paros in linea_4 %}
+                  <tr>
+                    <td>{{Paros.planta}}</td>
+                    <td>{{Paros.area}}</td>
+                    <td>{{Paros.linea_cto}}</td>
+                    <td>{{Paros.maquina}}</td>
+                    <td>{{Paros.turno}}</td>
+                    <td>{{Paros.seccion}}</td>
+                    <td>{{Paros.year}}</td>
+                    <td>{{(Paros.fecha)}}</td>
+                    <td>{{Paros.sku}}</td>
+                    <td>{{"{:.0f}".format(Paros.quality_loss)}}</td>
+                    <td>{{"{:.0f}".format(Paros.speed_loss)}}</td>
+                    <td>{{Paros.tiempo_maximo}}</td>
+                    <td>{{Paros.tiempo_usado}}</td>
+                    <td>{{"{:.0f}".format(Paros.tiempo_operativo)}}</td>
+                    <td>{{Paros.ge}}</td>
+                    <td>{{Paros.falla}}</td>
+                    <td>{{Paros.frec}}</td>
+                    <td>{{"{:.0f}".format(Paros.total)}}</td>
+                    <td>100</td>
+                  </tr>
+                  {% endfor %} {% for Paros in slab_1s %}
+                  <tr>
+                    <td>{{Paros.planta}}</td>
+                    <td>{{Paros.area}}</td>
+                    <td>{{Paros.linea_cto}}</td>
+                    <td>{{Paros.maquina}}</td>
+                    <td>{{Paros.turno}}</td>
+                    <td>{{Paros.seccion}}</td>
+                    <td>{{Paros.year}}</td>
+                    <td>{{(Paros.fecha)}}</td>
+                    <td>{{Paros.sku}}</td>
+                    <td>{{"{:.0f}".format(Paros.quality_loss)}}</td>
+                    <td>{{"{:.0f}".format(Paros.speed_loss)}}</td>
+                    <td>{{Paros.tiempo_maximo}}</td>
+                    <td>{{Paros.tiempo_usado}}</td>
+                    <td>{{"{:.0f}".format(Paros.tiempo_operativo)}}</td>
+                    <td>{{Paros.ge}}</td>
+                    <td>{{Paros.falla}}</td>
+                    <td>{{Paros.frec}}</td>
+                    <td>{{Paros.total}}</td>
+                    <td>100</td>
+                  </tr>
+                  {% endfor %}
+                  {% for Paros in bosch_2 %}
+                  <tr>
+                    <td>{{Paros.planta}}</td>
+                    <td>{{Paros.area}}</td>
+                    <td>{{Paros.linea_cto}}</td>
+                    <td>{{Paros.maquina}}</td>
+                    <td>{{Paros.turno}}</td>
+                    <td>{{Paros.seccion}}</td>
+                    <td>{{Paros.year}}</td>
+                    <td>{{(Paros.fecha)}}</td>
+                    <td>{{Paros.sku}}</td>
+                    <td>{{"{:.0f}".format(Paros.quality_loss)}}</td>
+                    <td>{{"{:.0f}".format(Paros.speed_loss)}}</td>
+                    <td>{{Paros.tiempo_maximo}}</td>
+                    <td>{{Paros.tiempo_usado}}</td>
+                    <td>{{"{:.0f}".format(Paros.tiempo_operativo)}}</td>
+                    <td>{{Paros.ge}}</td>
+                    <td>{{Paros.falla}}</td>
+                    <td>{{Paros.frec}}</td>
+                    <td>{{"{:.0f}".format(Paros.total)}}</td>
+                    <td>100</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="collapse" id="collapseExample">
+          <div class="col-xl-12">
+            <div class="card bg-transparent">
+              <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h5 class="h3 text-dark text-muted mb-0"><span class="badge badge-warning">GE Global Share</span>
+                    </h5>
+                  </div>
+                  <div class="col text-right">
+                    <!-- <input type="date" id="sample" class="btn btn-secondary"/> -->
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div id="container" style="width: 100%; height: 100%;"></div>
+                <table class="table" id="datatable" hidden>
+                  <thead>
+                    <tr>
+                      <th>Share</th>
+                      <th>Porcentaje</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Ge</td>
+                      <td>{{resul_ge}}</td>
+                    </tr>
+                    <tr>
+                      <td>No Planned</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <td>Planned</td>
+                      <td>{{planned}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-12">
+            <div class="card bg-transparent">
+              <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h5 class="h3 text-dark text-muted mb-0"><span class="badge badge-warning">GE Share</span></h5>
+                  </div>
+                  <div class="col text-right">
+                    <!-- <input type="date" id="sample" class="btn btn-secondary"/> -->
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div id="grafica_bar_reporte_del_turno_ge" style="width: 100%; height: 100%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-12">
+            <div class="card bg-transparent">
+              <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h5 class="h3 text-dark text-muted mb-0"><span class="badge badge-warning">Failure Modes</span></h5>
+                  </div>
+                  <div class="col text-right">
+                    <!-- <input type="date" id="sample" class="btn btn-secondary"/> -->
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div id="grafica_bar_reporte_del_turno_modos_de_falla" style="width: 100%; height: 100%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-12">
+            <div class="card bg-transparent">
+              <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h5 class="h3 text-dark text-muted mb-0"><span class="badge badge-warning">Ge Loss By GWF
+                        Loss</span></h5>
+                  </div>
+                  <div class="col text-right">
+                    <!-- <input type="date" id="sample" class="btn btn-secondary"/> -->
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div id="grafica_gwf_loss_bar" style="width: 100%; height: 100%;"></div>
+                <table class="table" id="data_gwf_loss_bar" hidden>
+                  <thead>
+                    <tr>
+                      <th>GWF Loss</th>
+                      <th>Porcentaje</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Paros Planeados</td>
+                      <td>{{planned}}</td>
+                    </tr>
+                    <tr>
+                      <td>Paro Operacional</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <td>Retraso de Linea</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <td>Cambios de Sabor</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <td>Sanitización</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <td>Paros Menores</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <td>Inicio y Fin de Prod</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <td>Reemplazo de consumibles</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <td>Averías</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <td>Pérdida de Calidad</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <td>AM</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <td>Perdida adminis.</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <td>Mante. Programado</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <td>Perdida por Vel</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <td>Falta de Materiales</td>
+                      <td>0</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- FIN -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer class="footer pt-0">
+    <div class="row align-items-center justify-content-lg-between">
+      <div class="col-lg-6">
+        <div class="copyright text-center  text-lg-left  text-muted">
+          &copy; 2021
+          <a href="" class="font-weight-bold ml-1" target="_blank">Mondelez</a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+          <li class="nav-item">
+            <a href="" class="nav-link" target="_blank">Dashboard</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+{% endblock %}

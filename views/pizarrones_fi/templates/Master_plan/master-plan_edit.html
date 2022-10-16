@@ -1,0 +1,333 @@
+{% extends "mainpages/page-layout.html" %}
+{% block title %}Edit{% endblock %}
+{% block contenido %}
+<!-- Page content -->
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card">
+        <div class="card-body">
+          {% for field, errors in form.errors.items() %}
+          <div class="alert alert-danger">
+            {{ form[field].label }}: {{ ', '.join(errors) }}
+          </div>
+          {% endfor %}
+          <form method="post">
+            {{ form.csrf_token }}
+            <div class="card-header">
+              <div class="row">
+                <div class="col-8">
+                  <h3 class="mb-0">
+                    <span class="badge badge-warning">Edición</span> - Master Plan a 3 Años
+                  </h3>
+                </div>
+                <div class="col-4 text-right">
+                  <a href="{{url_for('pizarron_fi.tablero_fi_masterplan')}}" class="btn btn-sm btn-primary">Regresar</a>
+                  {{form.enviar(class="btn btn-sm btn-warning", value="Guardar")}}
+                </div>
+              </div>
+            </div>
+            <h6 class="heading-small text-muted mb-4">Información</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label">Detalle Actividad</label>
+                    {{form.action_plan(class="form-control form-control-sm")}}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label">Responsable</label>
+                    {{form.owner(class="form-control form-control-sm")}}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label">Estado</label>
+                    {{form.levl(class="form-control form-control-sm")}}
+                  </div>
+                </div>
+              </div>
+
+              <p id="button_active" align="center">
+                <a class="btn btn-sm btn-outline-primary collapsed" data-toggle="collapse" data-target="#collapseOne">
+                  2020
+                </a>
+                <a class="btn btn-sm btn-outline-primary active collapsed" data-toggle="collapse" data-target="#collapseTwo">
+                  2021
+                </a>
+                <a class="btn btn-sm btn-outline-primary collapsed" data-toggle="collapse" data-target="#collapseTree">
+                  2022
+                </a>
+              </p>
+
+              <div id="accordion">
+                <div class="card">
+                  <div id="collapseOne" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                      <h6 class="heading-small text-warning mb-4" align="center">2020</h6>
+                      <div class="row">
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Enero</label>
+                            {{form.ene_2020(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Febrero</label>
+                            {{form.feb_2020(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Marzo</label>
+                            {{form.mar_2020(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Abril</label>
+                            {{form.abr_2020(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Mayo</label>
+                            {{form.may_2020(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Junio</label>
+                            {{form.jun_2020(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Julio</label>
+                            {{form.jul_2020(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Agosto</label>
+                            {{form.ago_2020(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Septiembre</label>
+                            {{form.sep_2020(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Octubre</label>
+                            {{form.oct_2020(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Noviembre</label>
+                            {{form.nov_2020(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Diciembre</label>
+                            {{form.dic_2020(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                      <h6 class="heading-small text-warning mb-4" align="center">2021</h6>
+                      <div class="row">
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Enero</label>
+                            {{form.ene_2021(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Febrero</label>
+                            {{form.feb_2021(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Marzo</label>
+                            {{form.mar_2021(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Abril</label>
+                            {{form.abr_2021(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Mayo</label>
+                            {{form.may_2021(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Junio</label>
+                            {{form.jun_2021(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Julio</label>
+                            {{form.jul_2021(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Agosto</label>
+                            {{form.ago_2021(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Septiembre</label>
+                            {{form.sep_2021(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Octubre</label>
+                            {{form.oct_2021(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Noviembre</label>
+                            {{form.nov_2021(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Diciembre</label>
+                            {{form.dic_2021(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="collapseTree" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                      <h6 class="heading-small text-warning mb-4" align="center">2022</h6>
+                      <div class="row">
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Enero</label>
+                            {{form.ene_2022(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Febrero</label>
+                            {{form.feb_2022(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Marzo</label>
+                            {{form.mar_2022(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Abril</label>
+                            {{form.abr_2022(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Mayo</label>
+                            {{form.may_2022(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Junio</label>
+                            {{form.jun_2022(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Julio</label>
+                            {{form.jul_2022(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Agosto</label>
+                            {{form.ago_2022(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Septiembre</label>
+                            {{form.sep_2022(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Octubre</label>
+                            {{form.oct_2022(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Noviembre</label>
+                            {{form.nov_2022(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group" align="center">
+                            <label class="form-control-label">Diciembre</label>
+                            {{form.dic_2022(class="form-control form-control-sm")}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer class="footer pt-0">
+    <div class="row align-items-center justify-content-lg-between">
+      <div class="col-lg-6">
+        <div class="copyright text-center text-lg-left text-muted">
+          &copy; 2021
+          <a href="" class="font-weight-bold ml-1" target="_blank">Mondelez</a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <ul
+          class="nav nav-footer justify-content-center justify-content-lg-end"
+        >
+          <li class="nav-item">
+            <a href="" class="nav-link" target="_blank">Dashboard</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+{% endblock %}

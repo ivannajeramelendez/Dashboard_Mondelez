@@ -1,0 +1,499 @@
+{% extends "mainpages/page-layout.html" %}
+{% block title %}Captura CTO's Slab{% endblock %}
+{% block contenido %}
+<!-- INCIO CTO -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header bg-transparent">
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="mb-0"><span class="badge badge-warning">Linea 4</span> - Slab 6's</h3>
+                        </div>
+                        <div class="col text-right">
+                            <a href="{{url_for('menus.menu_inicio_ctos_capturas')}}" class="btn btn-sm btn-primary">
+                                Regresar
+                            </a>
+                            <a href="{{url_for('menus.menu_inicio_dashboard_reporte_del_turno')}}" class="btn btn-sm btn-warning">
+                                Reporte de Turno
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8">
+                    {% for field, errors in form.errors.items() %}
+                    <div class="alert alert-danger">
+                        {{ form[field].label }}: {{ ', '.join(errors) }}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="card-body">
+                    <div class="card">
+                        <form method="post" enctype="multipart/form-data">
+                            {{ form.csrf_token }}
+                            <!-- AMVERSO-->
+                            <div class="row">
+                                <div class="col-xl-4">
+                                    <div class="card table-responsive">
+                                        <table class="table table-sm table-borderless">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th>Fecha:</th>
+                                                    <th>{{form.fecha(class="form-control-sm form-control", type="date", value="", id="example-date-input")}}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Turno:</th>
+                                                    <td>{{form.turno(class="form-control form-control-sm", id="tiempooperativo", oninput="cal()")}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Sku:</th>
+                                                    <td>{{form.sku(class="form-control form-control-sm", id="sku", oninput="cal()")}}
+                                                </tr>
+                                                <tr>
+                                                    <th>Maquina:</th>
+                                                    <td>{{form.maquina(class="form-control form-control-sm", id="maquina_speed", oninput="cal()")}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Lote Juliano</th>
+                                                    <td>{{form.lote(class="form-control form-control-sm", placeholder="Lote Juliano")}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Linea:</th>
+                                                    <td>{{form.linea(class="form-control form-control-sm", readonly=readonly)}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Numero del <br>Operador:</th>
+                                                    <td>
+                                                        <input class="form-control form-control-sm" type="text" id="empleado_numero" oninput="mostrar_empleado()"/>
+                                                        {{form.nombre_operador(class="form-control form-control-sm", id="empleado_nombre", readonly=readonly)}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Numero del <br>Operador Cambio:</th>
+                                                    <td>
+                                                        <input class="form-control form-control-sm" type="text"  id="empleado_numero_cambio" oninput="mostrar_empleado_cambio()"/>
+                                                        {{form.nombre_operador_cambios(class="form-control form-control-sm", id="empleado_nombre_cambio", readonly=readonly)}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Codigo Sobre:</th>
+                                                    <td>{{form.codigo_sobre(class="form-control form-control-sm", placeholder="Codigo")}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Tiempo Corrida:</th>
+                                                    <td>{{form.tiempo_corrida(class="form-control form-control-sm", placeholder="Minutos")}}</td>
+                                                </tr>
+                                                <tr hidden>
+                                                    <th>Area</th>
+                                                    <td>{{form.area(class="form-control form-control-sm")}}</td>
+                                                </tr>
+                                                <tr hidden>
+                                                    <th>Linea</th>
+                                                    <td>{{form.linea_cto(class="form-control form-control-sm")}}
+                                                    </td>
+                                                </tr>
+                                                <tr hidden>
+                                                    <th>Año</th>
+                                                    <td>{{form.year(class="form-control form-control-sm")}}</td>
+                                                </tr>
+                                                <tr hidden>
+                                                    <th>Planta</th>
+                                                    <td>{{form.planta(class="form-control form-control-sm")}}</td>
+                                                </tr>
+                                                <tr hidden>
+                                                    <th>Seccion</th>
+                                                    <td>{{form.seccion(class="form-control form-control-sm")}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-xl-8">
+                                    <div class="card table-responsive">
+                                        <table class="table table-sm table-borderless">
+                                            <thead class="table-dark">
+                                                <tr align="center">
+                                                    <th>Tiempo Operativo</th>
+                                                    <th>Tiempo Usado</th>
+                                                    <th>Tiempo Maximo </th>
+                                                    <th>Min Paro Planeado</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{form.tiempo_operativo(class="form-control
+                                                        form-control-sm", id="tiempo_operativo",readonly=readonly,
+                                                        placeholder="Min")}}</td>
+                                                    <td>{{form.tiempo_usado(class="form-control form-control-sm",
+                                                        id="tiempo_usado", readonly=readonly, placeholder="Min")}}
+                                                    </td>
+                                                    <td>{{form.tiempo_maximo(class="form-control form-control-sm",
+                                                        id="tiempo_maximo", readonly=readonly, placeholder="Min")}}
+                                                    </td>
+                                                    <td>{{form.min_paro_planeado(class="form-control
+                                                        form-control-sm", id="paro", value="0", oninput="cal()")}}
+                                                    </td>
+                                                </tr>
+                                                <tr align="center">
+                                                    <th colspan="1">% GE:</th>
+                                                    <td colspan="2">{{form.ge(class="form-control form-control-sm",
+                                                        id="ge", readonly=readonly, placeholder="% GE")}}</td>
+                                                </tr>
+                                                <tr align="center">
+                                                    <th>Quality Loss Min:</th>
+                                                    <td colspan="1">{{form.quality_loss(class="form-control
+                                                        form-control-sm", id="quality_loss_min", readonly=readonly,
+                                                        placeholder="Min")}}</td>
+                                                    <th>Tiempo por Justificar:</th>
+                                                    <td colspan="2">{{form.speed_loss(class="form-control
+                                                        form-control-sm", id="speed_loss", readonly=readonly,
+                                                        value="0")}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="card table-responsive">
+                                        <table class="table table-sm table-borderless">
+                                            <thead class="table-dark">
+                                                <tr align="center">
+                                                    <th>Rework <span class="badge badge-default">KG</span></th>
+                                                    <th>Scrap <span class="badge badge-default">KG</span></th>
+                                                    <th>Lote Bobina</th>
+                                                    <th>Bobina Consumida <span class="badge badge-default">KG</span>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{form.rework(class="form-control form-control-sm",
+                                                        id="rework", oninput="cal()")}}</td>
+                                                    <td>{{form.scrap(class="form-control form-control-sm",
+                                                        id="scrap", oninput="cal()")}}</td>
+                                                    <td>{{form.lote_bobina(class="form-control form-control-sm",
+                                                        placeholder="Lote")}}</td>
+                                                    <td>{{form.bobina_consumida(class="form-control
+                                                        form-control-sm")}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="card table-responsive">
+                                        <table class="table table-sm table-borderless">
+                                            <thead class="table-dark">
+                                                <tr align="center">
+                                                    <th>Total Display</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{form.total_display(class="form-control form-control-sm" ,
+                                                        id="total_display", oninput="cal()", value="0")}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="card table-responsive">
+                                        <table class="table table-sm table-borderless">
+                                            <thead class="table-dark">
+                                                <tr align="center">
+                                                    <th>N° Falla</th>
+                                                    <th>Nombre de Falla</th>
+                                                    <th>Frecuencia</th>
+                                                    <th>Min Totales</th>
+                                                    <th>Otro +</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- FILA 1 -->
+                                                <tr id="falla">
+                                                    <td><input class="form-control form-control-sm" type="text" id="numerofalla" oninput="mostrarfalla()" size="3"/></td>
+                                                    <td>{{form.falla(class="form-control form-control-sm", id="nombrefalla", readonly=readonly)}}</td>
+                                                    <td>{{form.frec(class="form-control form-control-sm", placeholder="Frecuencia", id="frecuencia", size="3")}}</td>
+                                                    <td>{{form.total(class="form-control form-control-sm", id="minuto1", oninput="cal()", size="3")}}</td>
+                                                    <td>
+                                                        <a class="btn btn-sm btn-danger" onclick="reinicio_boton()">
+                                                            <i class="fas fa-minus text-white"></i>
+                                                        </a>
+                                                        <button class="btn btn-sm btn-success add_field_button" data-toggle="collapse" href="#falla_2" role="button">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- INICIO BOTON MAS 2-->
+                                                <tr class="collapse" id="falla_2">
+                                                    <td><input class="form-control form-control-sm" type="text" id="numerofalla_2" oninput="mostrarfalla_2()" size="3"/></td>
+                                                    <td>{{form.falla_2(class="form-control form-control-sm", id="nombrefalla_2", readonly=readonly)}}</td>
+                                                    <td>{{form.frec_2(class="form-control form-control-sm", placeholder="Frecuencia", id="frecuencia_2", size="3")}}</td>
+                                                    <td>{{form.total_2(class="form-control form-control-sm", id="minuto2", oninput="cal()", size="3")}}</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger add_field_button" onclick="reinicio_boton2()" data-toggle="collapse" href="#falla_2" role="button">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-success add_field_button" data-toggle="collapse" href="#falla_3" role="button">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- INICIO BOTON MAS 3 -->
+                                                <tr class="collapse" id="falla_3">
+                                                    <td><input class="form-control form-control-sm" type="text" id="numerofalla_3" oninput="mostrarfalla_3()" size="3"/></td>
+                                                    <td>{{form.falla_3(class="form-control form-control-sm", id="nombrefalla_3", readonly=readonly)}}</td>
+                                                    <td>{{form.frec_3(class="form-control form-control-sm", placeholder="Frecuencia", id="frecuencia_3", size="3")}}</td>
+                                                    <td>{{form.total_3(class="form-control form-control-sm", id="minuto3", oninput="cal()", size="3")}}</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger add_field_button" onclick="reinicio_boton3()" data-toggle="collapse" href="#falla_3">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-success add_field_button" data-toggle="collapse" href="#falla_4">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- INICIO BOTON MAS 4 -->
+                                                <tr class="collapse" id="falla_4">
+                                                    <td><input class="form-control form-control-sm" type="text" id="numerofalla_4" oninput="mostrarfalla_4()" size="3"/></td>
+                                                    <td>{{form.falla_4(class="form-control form-control-sm", id="nombrefalla_4", readonly=readonly)}}</td>
+                                                    <td>{{form.frec_4(class="form-control form-control-sm", placeholder="Frecuencia", id="frecuencia_4", size="3")}}</td>
+                                                    <td>{{form.total_4(class="form-control form-control-sm", id="minuto4", oninput="cal()", size="3")}}</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger add_field_button" onclick="reinicio_boton4()" data-toggle="collapse" href="#falla_4">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-success add_field_button" data-toggle="collapse" href="#falla_5">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- INICIO BOTON MAS 5 -->
+                                                <tr class="collapse" id="falla_5">
+                                                    <td><input class="form-control form-control-sm" type="text" id="numerofalla_5" oninput="mostrarfalla_5()" size="3"/></td>
+                                                    <td>{{form.falla_5(class="form-control form-control-sm", id="nombrefalla_5", readonly=readonly)}}</td>
+                                                    <td>{{form.frec_5(class="form-control form-control-sm", placeholder="Frecuencia", id="frecuencia_5", size="3")}}</td>
+                                                    <td>{{form.total_5(class="form-control form-control-sm", id="minuto5", oninput="cal()", size="3")}}</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger add_field_button" onclick="reinicio_boton5()" data-toggle="collapse" href="#falla_5">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-success add_field_button" data-toggle="collapse" href="#falla_6">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- INICIO BOTON MAS 6 -->
+                                                <tr class="collapse" id="falla_6">
+                                                    <td><input class="form-control form-control-sm" type="text" id="numerofalla_6" oninput="mostrarfalla_6()" size="3"/></td>
+                                                    <td>{{form.falla_6(class="form-control form-control-sm", id="nombrefalla_6", readonly=readonly)}}</td>
+                                                    <td>{{form.frec_6(class="form-control form-control-sm", placeholder="Frecuencia", id="frecuencia_6", size="3")}}</td>
+                                                    <td>{{form.total_6(class="form-control form-control-sm", id="minuto6", oninput="cal()", size="3")}}</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger add_field_button" onclick="reinicio_boton6()" data-toggle="collapse" href="#falla_6">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-success add_field_button" data-toggle="collapse" href="#falla_7">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- INICIO BOTON MAS 7 -->
+                                                <tr class="collapse" id="falla_7">
+                                                    <td><input class="form-control form-control-sm" type="text" id="numerofalla_7" oninput="mostrarfalla_7()" size="3"/></td>
+                                                    <td>{{form.falla_7(class="form-control form-control-sm", id="nombrefalla_7", readonly=readonly)}}</td>
+                                                    <td>{{form.frec_7(class="form-control form-control-sm", placeholder="Frecuencia", id="frecuencia_7", size="3")}}</td>
+                                                    <td>{{form.total_7(class="form-control form-control-sm", id="minuto7", oninput="cal()", size="3")}}</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger add_field_button" onclick="reinicio_boton7()" data-toggle="collapse" href="#falla_7">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-success add_field_button" data-toggle="collapse" href="#falla_8">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- INICIO BOTON MAS 8 -->
+                                                <tr class="collapse" id="falla_8">
+                                                    <td><input class="form-control form-control-sm" type="text" id="numerofalla_8" oninput="mostrarfalla_8()" size="3"/></td>
+                                                    <td>{{form.falla_8(class="form-control form-control-sm", id="nombrefalla_8", readonly=readonly)}}</td>
+                                                    <td>{{form.frec_8(class="form-control form-control-sm", placeholder="Frecuencia", id="frecuencia_8", size="3")}}</td>
+                                                    <td>{{form.total_8(class="form-control form-control-sm", id="minuto8", oninput="cal()", size="3")}}</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger add_field_button" onclick="reinicio_boton8()" data-toggle="collapse" href="#falla_8">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-success add_field_button" data-toggle="collapse" href="#falla_9">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- INICIO BOTON MAS 9 -->
+                                                <tr class="collapse" id="falla_9">
+                                                    <td><input class="form-control form-control-sm" type="text" id="numerofalla_9" oninput="mostrarfalla_9()" size="3"/></td>
+                                                    <td>{{form.falla_9(class="form-control form-control-sm", id="nombrefalla_9", readonly=readonly)}}</td>
+                                                    <td>{{form.frec_9(class="form-control form-control-sm", placeholder="Frecuencia", id="frecuencia_9", size="3")}}</td>
+                                                    <td>{{form.total_9(class="form-control form-control-sm", id="minuto9", oninput="cal()", size="3")}}</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger add_field_button" onclick="reinicio_boton9()" data-toggle="collapse" href="#falla_9">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-success add_field_button" data-toggle="collapse" href="#falla_10">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- INICIO BOTON MAS 10 -->
+                                                <tr class="collapse" id="falla_10">
+                                                    <td><input class="form-control form-control-sm" type="text" id="numerofalla_10" oninput="mostrarfalla_10()" size="3"/></td>
+                                                    <td>{{form.falla_10(class="form-control form-control-sm", id="nombrefalla_10", readonly=readonly)}}</td>
+                                                    <td>{{form.frec_10(class="form-control form-control-sm", placeholder="Frecuencia", id="frecuencia_10", size="3")}}</td>
+                                                    <td>{{form.total_10(class="form-control form-control-sm", id="minuto10", oninput="cal()", size="3")}}</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger add_field_button" onclick="reinicio_boton10()" data-toggle="collapse" href="#falla_10">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-success add_field_button" data-toggle="collapse" href="#falla_11">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- INICIO BOTON MAS 11 -->
+                                                <tr class="collapse" id="falla_11">
+                                                    <td><input class="form-control form-control-sm" type="text" id="numerofalla_11" oninput="mostrarfalla_11()" size="3"/></td>
+                                                    <td>{{form.falla_11(class="form-control form-control-sm", id="nombrefalla_11", readonly=readonly)}}</td>
+                                                    <td>{{form.frec_11(class="form-control form-control-sm", placeholder="Frecuencia", id="frecuencia_11", size="3")}}</td>
+                                                    <td>{{form.total_11(class="form-control form-control-sm", id="minuto11", oninput="cal()", size="3")}}</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger add_field_button" onclick="reinicio_boton11()" data-toggle="collapse" href="#falla_11">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-success add_field_button" data-toggle="collapse" href="#falla_12">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- INICIO BOTON MAS 12 -->
+                                                <tr class="collapse" id="falla_12">
+                                                    <td><input class="form-control form-control-sm" type="text" id="numerofalla_12" oninput="mostrarfalla_12()" size="3"/></td>
+                                                    <td>{{form.falla_12(class="form-control form-control-sm", id="nombrefalla_12", readonly=readonly)}}</td>
+                                                    <td>{{form.frec_12(class="form-control form-control-sm", placeholder="Frecuencia", id="frecuencia_12", size="3")}}</td>
+                                                    <td>{{form.total_12(class="form-control form-control-sm", id="minuto12", oninput="cal()", size="3")}}</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger add_field_button" onclick="reinicio_boton12()" data-toggle="collapse" href="#falla_12">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-success add_field_button" data-toggle="collapse" href="#falla_13">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- INICIO BOTON MAS 13 -->
+                                                <tr class="collapse" id="falla_13">
+                                                    <td><input class="form-control form-control-sm" type="text" id="numerofalla_13" oninput="mostrarfalla_13()" size="3"/></td>
+                                                    <td>{{form.falla_13(class="form-control form-control-sm", id="nombrefalla_13", readonly=readonly)}}</td>
+                                                    <td>{{form.frec_13(class="form-control form-control-sm", placeholder="Frecuencia", id="frecuencia_13", size="3")}}</td>
+                                                    <td>{{form.total_13(class="form-control form-control-sm", id="minuto13", oninput="cal()", size="3")}}</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger add_field_button" onclick="reinicio_boton13()" data-toggle="collapse" href="#falla_13">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-success add_field_button" data-toggle="collapse" href="#falla_14">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- INICIO BOTON MAS 14 -->
+                                                <tr class="collapse" id="falla_14">
+                                                    <td><input class="form-control form-control-sm" type="text" id="numerofalla_14" oninput="mostrarfalla_14()" size="3"/></td>
+                                                    <td>{{form.falla_14(class="form-control form-control-sm", id="nombrefalla_14", readonly=readonly)}}</td>
+                                                    <td>{{form.frec_14(class="form-control form-control-sm", placeholder="Frecuencia", id="frecuencia_14", size="3")}}</td>
+                                                    <td>{{form.total_14(class="form-control form-control-sm", id="minuto14", oninput="cal()", size="3")}}</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger add_field_button" onclick="reinicio_boton14()" data-toggle="collapse" href="#falla_14">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-success add_field_button" data-toggle="collapse" href="#falla_15">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- INICIO BOTON MAS 15 -->
+                                                <tr class="collapse" id="falla_15">
+                                                    <td><input class="form-control form-control-sm" type="text" id="numerofalla_15" oninput="mostrarfalla_15()" size="3"/></td>
+                                                    <td>{{form.falla_15(class="form-control form-control-sm", id="nombrefalla_15", readonly=readonly)}}</td>
+                                                    <td>{{form.frec_15(class="form-control form-control-sm", placeholder="Frecuencia", id="frecuencia_15", size="3")}}</td>
+                                                    <td>{{form.total_15(class="form-control form-control-sm", id="minuto15", oninput="cal()", size="3")}}</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger add_field_button" onclick="reinicio_boton15()" data-toggle="collapse" href="#falla_15">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <!-- <button class="btn btn-sm btn-success add_field_button" data-toggle="collapse" href="#falla_16" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-plus"></i></button> -->
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- OBSERVACIONES -->
+                            <div class="card-body">
+                                <div class="form-group" align="center">
+                                    <label><b>Observaciones:</b></label>
+                                    {{form.observaciones(rows="2", class="form-control form-control-sm", placeholder="Coloca tus Observaciones Aqui")}}
+                                </div>
+                            </div>
+                            <!-- BOTON ENVIAR CON POP-->
+                            <div class="card-body">
+                                <button type="button" class="btn btn-lg btn-outline-primary btn-block" data-toggle="modal" data-target="#botonenviar">
+                                    Enviar Datos
+                                </button>
+                                <div class="modal fade" id="botonenviar" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="botonenviarLabel">Confirmación de Envio</h5>
+                                                <button class="close" data-dismiss="modal">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ¿Estás seguro de enviar la información?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                {{form.enviar(class="btn btn-primary")}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer pt-0">
+        <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6">
+                <div class="copyright text-center  text-lg-left  text-muted">
+                    &copy; 2021 <a href="" class="font-weight-bold ml-1" target="_blank">Mondelez</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                    <li class="nav-item">
+                        <a href="" class="nav-link" target="_blank">Dashboard</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+<!-- FIN CTO -->
+{% endblock %}

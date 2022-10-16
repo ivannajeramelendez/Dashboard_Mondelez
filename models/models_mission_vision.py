@@ -1,0 +1,17 @@
+from sqlalchemy import Boolean, Column, ForeignKey
+from sqlalchemy import DateTime, Integer, String, Text, Float
+from sqlalchemy.sql import func 
+from sqlalchemy.orm import relationship, backref
+from aplicacion.app import db
+from werkzeug.security import generate_password_hash, check_password_hash
+
+# --------------------------------------------------------- INICIO MISSION  -----------------------------------------------------#
+class Mission_fi(db.Model):
+    """Tabla Mission and Vision"""
+    __tablename__ = 'mission_fi'
+    id = Column(Integer, primary_key=True)
+    titulo = Column(String(100), nullable=False)
+    image = Column(String(255))
+
+    def __repr__(self):
+        return (u'<{self.__class__.__name__}: {self.id}>'.format(self=self))

@@ -1,0 +1,28 @@
+{% extends "mainpages/page-layout.html" %}
+{% block title %}Delete{% endblock %}
+{% block contenido %}
+<div class="container-fluid mt--6">
+  <div class="row justify-content-center">
+    <div class="col">
+      <div class="card">
+        <div class="card-header bg-transparent">
+          <h3 class="mb-0">Borrar Usuario</h3>
+        </div>
+        <div class="card-body">
+          <div class="row icon-examples">
+            <div class="col-md-10">
+              <p>¿Estás seguro de borrar el usuario?</p>
+            </div>
+            <form class="form-horizontal" method="post">
+              <div class="form-group">
+                {{ form.csrf_token }}
+                {{form.si(class="btn btn-success") }} {{form.no(class="btn btn-info")}}<br /><br />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

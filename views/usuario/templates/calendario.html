@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="Ivan Najera">
+	<title>Calendario</title>
+	<!-- Favicon -->
+	<link rel="icon" href="{{ url_for('static', filename='img/brand/favicon.png') }}">
+	<!-- Fonts -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+	<!-- Icons -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='vendor/nucleo/css/nucleo.css') }}">
+	<link rel="stylesheet"
+		href="{{ url_for('static', filename='vendor/@fortawesome/fontawesome-free/css/all.min.css') }}">
+	<!-- Argon CSS -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/argon.css') }}">
+	<!-- ICONOS fontawesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+		integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	<link rel="stylesheet" href="{{ url_for('static', filename='iconos-fonta/css/all.css') }}">
+	<!-- Css Calendario -->
+	<link href="{{ url_for('static', filename='calendar/css/fullcalendar.css') }}" rel="stylesheet" />
+	<link href="{{ url_for('static', filename='calendar/css/fullcalendar.print.css') }}" rel="stylesheet"
+		media="print" />
+	<link href="{{ url_for('static', filename='calendar/css/calendario.css') }}" rel="style" />
+	<!-- Script Calendario -->
+	<script src="{{ url_for('static', filename='calendar/js/jquery-1.10.2.js') }}" type="text/javascript"></script>
+	<script src="{{ url_for('static', filename='calendar/js/jquery-ui.custom.min.js') }}"
+		type="text/javascript"></script>
+	<script src="{{ url_for('static', filename='calendar/js/fullcalendar.js') }}" type="text/javascript"></script>
+	<script src="{{ url_for('static', filename='calendar/js/calendario.js') }}" type="text/javascript"></script>
+</head>
+
+<body>
+
+	<!-- Main content -->
+	<div class="main-content" id="panel">
+		<!-- BARRA DE NAVEGACION -->
+		<nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
+		<div class="container-fluid">
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<!-- Imgaen -->
+			<div class="navbar-header">
+				<a href="#">
+				<img src="{{ url_for('static', filename='img/brand/new.jfif') }}" width="230" height="35" alt="">
+				</a>
+			</div>
+			<!-- Navbar links -->
+			<ul class="navbar-nav align-items-center  ml-md-auto "></ul>
+			<ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
+				<li class="nav-item dropdown">
+				<a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<div class="media align-items-center">
+					<span class="avatar avatar-sm rounded-circle">
+						<img alt="Image placeholder" src="{{ url_for('static', filename='img/theme/perfil.png') }}">
+					</span>
+					<div class="media-body  ml-2  d-none d-lg-block">
+						<span class="mb-0 text-sm  font-weight-bold">{{ current_user.username}}</span>
+					</div>
+					</div>
+				</a>
+				<div class="dropdown-menu  dropdown-menu-right">
+					<div class="dropdown-header noti-title">
+					<h6 class="text-overflow m-0">!Bienvenido {{ current_user.username}}¡</h6>
+					</div>
+					<a class="dropdown-item" href="/perfil/{{ current_user.username}}"><i class="ni ni-single-02 text-primary"></i>Perfil</a>
+					<a class="dropdown-item" href="{{url_for('usuario.calendario')}}"><i class="ni ni-calendar-grid-58 text-primary"></i>Calendario</a>
+					<a class="dropdown-item" href="{{url_for('usuario.inicio')}}"><i class="fas fa-clipboard text-primary"></i>Publicaciones</a>
+					{% if current_user.is_authenticated and current_user.is_admin() %}
+					<a class="dropdown-item" href="{{url_for('dashboard.dashboard_inicio')}}"><i class="fas fa-chart-line text-primary"></i>Dashboard</a>
+					{% endif %}
+					{% if current_user.is_authenticated %}
+					{% endif %}
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="{{url_for('menus.menu_inicio')}}"><i class="fas fa-cubes"></i>Menu</a>
+					<a class="dropdown-item" href="/logout"><i class="ni ni-user-run text-red"></i>Salir</a>
+				</div>
+				</li>
+			</ul>
+			</div>
+		</div>
+		</nav>
+		<!-- INICIO DE SEPARACION -->
+		<div class="header bg-primary pb-6">
+			<div class="container-fluid">
+				<div class="header-body">
+					<div class="row align-items-center py-4">
+						<div class="col-lg-6 col-7">
+							<!-- <h6 class="h2 text-white d-inline-block mb-0"></h6>
+							<nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+								<ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+									<li class="breadcrumb-item"><a href="{{url_for('menus.menu_inicio')}}"><i
+												class="fas fa-home"></i></a></li>
+									<li class="breadcrumb-item"><a href="{{url_for('menus.menu_inicio')}}">Inicio</a></li>
+								</ol>
+							</nav> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- FIN DE SEPARACION -->
+		<div class="container-fluid mt--6">
+			<div class="row justify-content-center">
+				<div class=" col ">
+					<div class="card">
+						<div class="card-header bg-transparent">
+							<div class="row align-items-center">
+								<div class="col-8">
+								<h3 class="mb-0">Calendario</h3>
+								</div>
+								<div class="col-4 text-right">
+								<a class="btn btn-primary btn-sm" href="{{url_for('menus.menu_inicio')}}" role="button">Regresar</a>              
+								</div>
+							</div>
+						</div>
+						<div class="card-body">
+							<!-- INICIO Calendario -->
+							<div id='wrap'>
+								<div id='calendar'></div>
+								<div style='clear:both'></div>
+							</div>
+							<!-- FIN Calendario -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Footer -->
+			<footer class="footer pt-0">
+				<div class="row align-items-center justify-content-lg-between">
+					<div class="col-lg-6">
+						<div class="copyright text-center  text-lg-left  text-muted">
+							&copy; 2020 <a href="" class="font-weight-bold ml-1" target="_blank">Mondelez</a>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<ul class="nav nav-footer justify-content-center justify-content-lg-end">
+							<li class="nav-item">
+								<a href="" class="nav-link" target="_blank">Dashboard</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</footer>
+		</div>
+	<!-- INCIO Scripts -->
+	<!-- Core -->
+	<script src="{{ url_for('static', filename='vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"
+		type="text/javascript"></script>
+	<script src="{{ url_for('static', filename='vendor/js-cookie/js.cookie.js') }}" type="text/javascript"></script>
+	<script src="{{ url_for('static', filename='vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}"
+		type="text/javascript"></script>
+	<script src="{{ url_for('static', filename='vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}"
+		type="text/javascript"></script>
+	<!-- Argon JS -->
+	<script src="{{ url_for('static', filename='js/argon.js') }}" type="text/javascript"></script>
+	<!-- FIN Scripts -->
+</body>
+
+</html>

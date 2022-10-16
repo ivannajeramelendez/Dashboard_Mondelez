@@ -1,0 +1,19 @@
+{% extends "mainpages/login-layout.html" %}
+{% block contenido %}
+
+{% for field, errors in form.errors.items() %}
+  <div class="alert alert-danger">
+  {{ form[field].label }}: {{ ', '.join(errors) }}
+  </div>
+{% endfor %}
+
+<form method="post" class="the-form">
+  {{ form.csrf_token }}
+  <label for="email">Usuario</label>
+  {{form.username(placeholder="Usuario")}}
+  <label for="password">Contraseña</label>
+  {{form.password(placeholder="Contraseña")}}
+  {{form.submit}}
+</form>
+
+{% endblock %}

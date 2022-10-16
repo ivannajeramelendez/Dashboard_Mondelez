@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="icon" href="{{ url_for('static', filename='img/brand/favicon.png') }}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Muli:wght@400;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login_css/css/style-with-prefix.css') }}"/>
+    <style>
+      .srouce {
+        text-align: center;
+        color: #ffffff;
+        padding: 50px;
+      }
+    </style>
+  </head>
+  <body>
+  <div id="preloader"></div>
+    <div class="main-container">
+      <div class="form-container">
+        <div class="srouce">
+          <a href="http://198.251.78.73">
+            <img src="{{ url_for('static', filename='img/brand/new.jfif') }}" width="220" height="35" alt=""/>
+          </a>
+        </div>
+        <div class="form-body">
+          <h2 class="title">¡Bienvenido!</h2>
+          <div class="social-login">
+            <ul>
+              <!-- <li class="google"><a href="#">Google</a></li>
+                        <li class="fb"><a href="#">Facebook</a></li> -->
+            </ul>
+          </div>
+          <!-- <div class="_or">or</div> -->
+          {% block contenido %}{% endblock %}
+        </div>
+        <div class="form-footer">
+          <div>
+            <h5>
+              <span>¿No tienes Cuenta?</span> <a href="/registro">Registrate</a>
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- PRELOADER -->
+  <script src="{{ url_for('static', filename='javascript_per/preloader.js') }}"></script>
+  </body>
+</html>

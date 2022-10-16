@@ -1,0 +1,119 @@
+{% extends "mainpages/layout.html" %}
+{% block title %}Board - FI{% endblock %}
+{% block content %}
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header bg-transparent">
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="mb-0 text-primary">
+                                Mission and Vision
+                            </h3>
+                        </div>
+                        <div class="col text-right">
+                            <a href="{{url_for('pizarron_fi.pizarron')}}" class="btn btn-sm btn-primary">Regresar</a>
+                            {% if current_user.is_admin() or current_user.is_user_fi() %}
+                                {% for dato in articulos %}
+                                <a href="{{url_for('pizarron_fi.tablero_fi_mision_fi_edit',id=dato.id)}}" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i></a>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- INICIO MISION VISION -->
+                        <div class="col-xl-12">
+                            <div class="card bg-transparent">
+                                <div class="card-header bg-transparent">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="h3 text-dark text-muted mb-0">
+                                                <span class="badge badge-warning">
+                                                    {% for dato in articulos %}
+                                                        {{dato.titulo}}
+                                                    {% endfor %}
+                                                </span>
+                                            </h5>
+                                        </div>
+                                        <div class="col text-right">
+                                            <!-- <input type="date" id="sample" class="btn btn-secondary"/> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body" align="center">
+                                    <div id="container" style="width: 80%; height: 80%;">
+                                        {% for art in articulos %}
+                                            {% if art.image %}
+                                            <img class="card-img-top" src="{{url_for('.static',filename='upload/')}}{{art.image}}"/>
+                                            {% else %}
+                                            <img class="card-img-top" src="{{url_for('.static',filename='upload/not-found.png')}}"/>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-12">
+                            <div class="card-footer text-primary" align="right">
+                                <div class="card" style="width: 18rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-primary"><i class="far fa-comment-dots"></i> Comentario del Auditor</h5>
+                                        <h5 class="card-text">{% for comen in comentario %}{{comen.comentario}}{% endfor %}</h5>
+                                        {% if current_user.is_admin() or current_user.is_user_auditor() %}
+                                            <a href="#" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#auditor" >Editar</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- FIN MISION VISION -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer pt-0">
+        <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6">
+                <div class="copyright text-center  text-lg-left  text-muted">
+                    &copy; 2021 <a href="" class="font-weight-bold ml-1" target="_blank">Mondelez</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                    <li class="nav-item">
+                        <a href="" class="nav-link" target="_blank">Dashboard</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="auditor">
+    <form method="POST">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Comentario</h5>
+                </div>
+                <div class="modal-body">
+                    {{ form.csrf_token }}
+                    {{form.comentario(class="form-control form-control-sm text-primary")}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cerrar</button>
+                    {{form.submit(class="btn btn-sm btn-warning", value="Guardar")}}
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

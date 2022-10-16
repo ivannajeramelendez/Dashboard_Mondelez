@@ -1,0 +1,126 @@
+{% extends "mainpages/layout.html" %}
+{% block title %}Board - FI{% endblock %}
+{% block content %}
+<form method="post">{{ form.csrf_token }}
+<!-- Page content -->
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header bg-transparent">
+          <div class="row">
+            <div class="col">
+              <h3 class="mb-0"><span class="badge badge-warning">Edición</span> - GAP Analysis</h3>
+            </div>
+            <div class="col text-right">
+              <a href="{{url_for('pizarron_fi.tablero_fi_gapanalisis_5')}}" class="btn btn-sm btn-primary">Regresar</a>
+              {{form.enviar(class="btn btn-sm btn-warning", value="Guardar")}}
+            </div>
+          </div>
+        </div>
+        {% for field, errors in form.errors.items() %}
+        <div class="alert alert-danger">
+          {{ form[field].label }}: {{ ', '.join(errors) }}
+        </div>
+        {% endfor %}
+        <div class="card-body">
+          <h3 class="text-muted" align="center">IL6S Leadership Pillar Puebla Site</h3>
+          <div class="row">
+            <div class="col-xl-6">
+              <div class="card bg-transparent">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-xl-6">
+                      <div class="form-group">
+                        <label class="form-control-label">Objetivo del Analisis:</label>
+                        {{form.objetivo_analisis(class="form-control form-control-sm")}}
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-control-label">Fecha:</label>
+                        {{form.fecha(class="form-control form-control-sm", type="date")}}
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="form-control-label">Explique el Gap:</label>
+                        {{form.explique(class="form-control form-control-sm")}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6">
+              <div class="card bg-transparent">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-xl-6">
+                      <div class="form-group">
+                        <label class="form-control-label">Causa Raiz:</label>
+                        {{form.causa_raices(class="form-control form-control-sm")}}
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-control-label">Plan de Acción:</label>
+                        {{form.plan_accion(class="form-control form-control-sm")}}
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="form-control-label">Responsable:</label>
+                        {{form.responsable(class="form-control form-control-sm")}}
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="form-control-label">Fecha:</label>
+                        {{form.fecha_1(class="form-control form-control-sm", type="date")}}
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="form-control-label">Estatus:</label>
+                        {{form.status(class="form-control form-control-sm")}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer class="footer pt-0">
+    <div class="row align-items-center justify-content-lg-between">
+      <div class="col-lg-6">
+        <div class="copyright text-center  text-lg-left  text-muted">
+          &copy; 2021 <a href="" class="font-weight-bold ml-1" target="_blank">Mondelez</a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+          <li class="nav-item">
+            <a href="" class="nav-link" target="_blank"></a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link" target="_blank"></a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link" target="_blank"></a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link" target="_blank">Mondelez</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+</form>
+{% endblock %}

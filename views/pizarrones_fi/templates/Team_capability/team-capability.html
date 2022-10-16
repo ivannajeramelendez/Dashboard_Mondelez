@@ -1,0 +1,263 @@
+{% extends "mainpages/layout.html" %}
+{% block title %}Board - FI{% endblock %}
+{% block content %}
+<!-- Page content -->
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header bg-transparent">
+          <div class="row">
+            <div class="col">
+              <h3 class="mb-0">
+                Creación de Capacidad en el Comité 5S
+              </h3>
+            </div>
+            <div class="col text-right">
+              <a href="{{url_for('pizarron_fi.pizarron')}}" class="btn btn-sm btn-primary">Regresar</a>
+              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+              <a href="{{url_for('pizarron_fi.tablero_fi_tcapability_new')}}" class="btn btn-sm btn-success">
+                <i class="fas fa-plus"></i>
+              </a>
+              <a class="btn btn-sm btn-danger" data-toggle="collapse" href="#borrar" role="button">
+                <i class="fas fa-minus"></i>
+              </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+
+            <div class="col-xl-12">
+              <div class="card table-responsive">
+                <table class="table table-sm table-borderless">
+                  <thead class="table-dark">
+                    <tr align="center">
+                      <th>N°</th>
+                      <th>Nombre</th>
+                      <th>Objetivo</th>
+                      <th>Calificación</th>
+                      <th>Acreditación</th>
+                      {% if current_user.is_admin() or current_user.is_user_fi() %}
+                      <th>Modificar</th>
+                      {% endif %}
+                      {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                      <th id="borrar" class="collapse fade">Borrar</th>
+                      {% endif %}
+                    </tr>
+                  </thead>
+                  <tbody align="center">
+                    {% for Paros in paros %}
+                    <tr>
+                      <td>{{Paros.id}}</td>
+                      <th>{{Paros.nombre}}</th>
+                      <td><i class="fa fa-arrow-up"></i> {{Paros.objetivo}} %</td>
+                      <td>{{Paros.acreditacion}} %</td>
+                      <td>{{Paros.calificacion}} %</td>
+                      {% if current_user.is_admin() or current_user.is_user_fi() %}
+                      <td>
+                        <a href="{{url_for('pizarron_fi.tablero_fi_tcapability_edit',id=Paros.id)}}">
+                          <button type="button" class="btn btn-warning btn-sm">
+                            <i class="fas fa-pen"></i>
+                          </button>
+                        </a>
+                      </td>
+                      {% endif %}
+                      {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                      <td id="borrar" class="collapse fade">
+                        <a href="{{url_for('pizarron_fi.tablero_fi_tcapability_delete',id=Paros.id)}}">
+                          <button type="button" class="btn btn-danger btn-sm">
+                            <i class="fas fa-minus"></i>
+                          </button>
+                        </a>
+                      </td>
+                      {% endif %}
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                      <td class="border-top"></td>
+                      <td class="border-top"></td>
+                      <td class="border-top"><b>PROMEDIO:</b></td>
+                      <td class="border-top"><b>{{promedio_acreditacion}} %</b></td>
+                      <td class="border-top"><b>{{promedio_calificacion}} %</b></td>
+                      {% if current_user.is_admin() or current_user.is_user_fi() %}
+                      <td class="border-top"></td>
+                      <!-- <td class="table-dark"></td> -->
+                      {% endif %}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="col-xl-6">
+              <div class="card bg-transparent">
+                <div class="card-header bg-transparent">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="h3 text-dark text-muted mb-0"><span class="badge badge-warning">Comité %</span>
+                      </h5>
+                    </div>
+                    <div class="col text-right">
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div id="data_acreditacion_graph" style="width: 100%; height: 100%;"></div>
+                  <table class="table table-sm" id="data_acreditacion" hidden>
+                    <thead>
+                      <tr>
+                        <th>N°</th>
+                        <th>Nombre</th>
+                        <th>Objetivo</th>
+                        <th>Acreditación</th>
+                        <th>Calificación</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for Paros in paros %}
+                      <tr>
+                        <td>{{Paros.id}}</td>
+                        <th>{{Paros.nombre}}</th>
+                        <td>{{Paros.objetivo}}%</td>
+                        <td>{{Paros.acreditacion}} %</td>
+                        <td>{{Paros.calificacion}} %</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-xl-6">
+              <div class="card bg-transparent">
+                <div class="card-header bg-transparent">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="h3 text-dark text-muted mb-0"><span class="badge badge-warning">Comité %</span>
+                      </h5>
+                    </div>
+                    <div class="col text-right">
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div id="data_acreditacion_graph_2" style="width: 100%; height: 100%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-12">
+              <div class="card bg-transparent">
+                <div class="card-header bg-transparent">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="h3 text-dark text-muted mb-0"><span class="badge badge-warning">TEAM CARD</span>
+                      </h5>
+                    </div>
+                    <div class="col text-right">
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div id="data_calificacion_graph_team" style="height: 275px;"></div>
+                  <table id="data_calificacion_team" hidden>
+                    <thead class="table-dark">
+                      <tr align="center">
+                        <th>Title</th>
+                        <th>Cal</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr align="center">
+                        <td>Basic Concepts</td>
+                        <td>{{total_basic}}</td>
+                      </tr>
+                      <tr align="center">
+                        <td>Loss Intelligence</td>
+                        <td>{{total_intelligence}}</td>
+                      </tr>
+                      <tr align="center">
+                        <td>Loss Eradication</td>
+                        <td>{{total_eradication}}</td>
+                      </tr>
+                      <tr align="center">
+                        <td>Loss Prevention</td>
+                        <td>{{total_prevention}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-12">
+              <div class="card-footer text-primary" align="right">
+                <div class="card" style="width: 18rem;">
+                  <div class="card-body">
+                      <h5 class="card-title text-primary"><i class="far fa-comment-dots"></i> Comentario del Auditor</h5>
+                      <h5 class="card-text">{% for comen in comentario %}{{comen.comentario}}{% endfor %}</h5>
+                      {% if current_user.is_admin() or current_user.is_user_auditor() %}
+                          <a href="#" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#auditor" >Editar</a>
+                      {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer class="footer pt-0">
+    <div class="row align-items-center justify-content-lg-between">
+      <div class="col-lg-6">
+        <div class="copyright text-center  text-lg-left  text-muted">
+          &copy; 2021 <a href="" class="font-weight-bold ml-1" target="_blank">Mondelez</a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+          <li class="nav-item">
+            <a href="" class="nav-link" target="_blank"></a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link" target="_blank"></a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link" target="_blank"></a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link" target="_blank">Mondelez</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="auditor">
+  <form method="POST">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title">Comentario</h5>
+              </div>
+              <div class="modal-body">
+                  {{ form.csrf_token }}
+                  {{form.comentario(class="form-control form-control-sm text-primary")}}
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cerrar</button>
+                  {{form.submit(class="btn btn-sm btn-warning", value="Guardar")}}
+              </div>
+          </div>
+      </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,181 @@
+{% extends "mainpages/page-layout.html" %}
+{% block title %}Edit{% endblock %}
+{% block contenido %}
+<!-- Page content -->
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card">
+        <div class="card-body">
+          {% for field, errors in form.errors.items() %}
+          <div class="alert alert-danger">
+            {{ form[field].label }}: {{ ', '.join(errors) }}
+          </div>
+          {% endfor %}
+          <form method="post">
+            {{ form.csrf_token }}
+            <div class="card-header">
+              <div class="rows">
+                <div class="col-8">
+                  <h3 class="mb-0">
+                    <span class="badge badge-warning">Edición</span> - Scorecard
+                  </h3>
+                </div>
+                <div class="col-4 text-right">
+                  {{form.enviar(class="btn btn-sm btn-warning", value="Guardar")}}
+                </div>
+              </div>
+            </div>
+            <h6 class="heading-small text-muted mb-4">Información</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="form-control-label">Categoria</label>
+                    {{form.categoria(class="form-control form-control-sm", placeholder="Indicadores")}}
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="form-control-label">Nombre del Indicador</label>
+                    {{form.nombre(class="form-control form-control-sm", placeholder="Nombre de Indicador")}}
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="form-control-label">Formula</label>
+                    {{form.formula(class="form-control form-control-sm", placeholder="Formula de Calculo")}}
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="form-control-label">Criterio de Exito</label>
+                    {{form.criterio_de_exito(class="form-control form-control-sm", placeholder="Mayor es Mejor")}}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="form-control-label">Unidades de Medida</label>
+                    {{form.unidades_medida(class="form-control form-control-sm", placeholder="Unidades de Medida")}}
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="form-control-label">Tg</label>
+                    {{form.tg(class="form-control form-control-sm", placeholder="Target")}}
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="form-control-label">FY</label>
+                    {{form.fye(class="form-control form-control-sm", placeholder="Fy")}}
+                  </div>
+                </div>
+              </div>
+              <h6 class="heading-small text-muted mb-4" align="center">Periodo</h6>
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="form-control-label">ENE</label>
+                    {{form.ene(class="form-control form-control-sm", placeholder="Enero")}}
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="form-control-label">FEB</label>
+                    {{form.feb(class="form-control form-control-sm", placeholder="Febrero")}}
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="form-control-label">MAR</label>
+                    {{form.mar(class="form-control form-control-sm", placeholder="Marzo")}}
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="form-control-label">ABR</label>
+                    {{form.abr(class="form-control form-control-sm", placeholder="Abril")}}
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="form-control-label">MAY</label>
+                    {{form.may(class="form-control form-control-sm", placeholder="Mayo")}}
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="form-control-label">JUN</label>
+                    {{form.jun(class="form-control form-control-sm", placeholder="Junio")}}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="form-control-label">JUL</label>
+                    {{form.jul(class="form-control form-control-sm", placeholder="Julio")}}
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="form-control-label">AGO</label>
+                    {{form.ago(class="form-control form-control-sm", placeholder="Agosto")}}
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="form-control-label">SEP</label>
+                    {{form.sep(class="form-control form-control-sm", placeholder="Septiembre")}}
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="form-control-label">OCT</label>
+                    {{form.oct(class="form-control form-control-sm", placeholder="Octubre")}}
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="form-control-label">NOV</label>
+                    {{form.nov(class="form-control form-control-sm", placeholder="Noviembre")}}
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="form-control-label">DIC</label>
+                    {{form.dic(class="form-control form-control-sm", placeholder="Diciembre")}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer class="footer pt-0">
+    <div class="row align-items-center justify-content-lg-between">
+      <div class="col-lg-6">
+        <div class="copyright text-center text-lg-left text-muted">
+          &copy; 2021
+          <a href="" class="font-weight-bold ml-1" target="_blank">Mondelez</a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <ul
+          class="nav nav-footer justify-content-center justify-content-lg-end"
+        >
+          <li class="nav-item">
+            <a href="" class="nav-link" target="_blank">Dashboard</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+{% endblock %}

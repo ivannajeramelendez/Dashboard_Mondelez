@@ -1,0 +1,254 @@
+{% extends "mainpages/page-layout.html" %}
+{% block title %}Edit{% endblock %}
+{% block contenido %}
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <!-- <div class="col-xl-4 order-xl-2"></div> -->
+        <div class="col-xl-12 order-xl-1">
+            <div class="card">
+                <div class="card-body">
+                    {% for field, errors in form.errors.items() %}
+                    <div class="alert alert-danger">
+                    {{ form[field].label }}: {{ ', '.join(errors) }}
+                    </div>
+                    {% endfor %}
+                    <form method="post">
+                        {{ form.csrf_token }}
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <h3 class="mb-0">Editar Usuario</h3>
+                                </div>
+                                <div class="col-4 text-right">
+                                    {{form.submit(class="btn btn-sm btn-warning", value="Guardar")}}
+                                </div>
+                            </div>
+                        </div>
+                        <h6 class="heading-small text-muted mb-4">Informacion del Usuario</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Username:</label>
+                                        {{form.username(class="form-control form-control-sm", placeholder="Producto del Sku")}}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Nombre:</label>
+                                        {{form.nombre(class="form-control form-control-sm", placeholder="Nombre")}}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Correo:</label>
+                                        {{form.email(class="form-control form-control-sm", placeholder="N° de Sku")}}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Contraseña:</label>
+                                        {{form.password(class="form-control form-control-sm", placeholder="Nueva Contraseña")}}
+                                    </div>
+                                </div>
+                            </div>
+                            {% if current_user.is_admin() %}
+                                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#auditor" >Leader Board</a>
+                            {% endif %}
+                            <h6 class="heading-small text-muted text-primary mb-4" align="center">
+                                <span class="badge badge-success">Global App</span>
+                            </h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Administrador Web:</label><br>
+                                          {{form.admin(class="custom-select")}}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Auditor:</label>
+                                        {{form.user_auditor(class="custom-select")}}
+                                    </div>
+                                </div>
+                            </div>
+                                <h6 class="heading-small text-muted text-primary mb-4" align="center">
+                                    <span class="badge badge-success">Board Pilar</span>
+                                </h6>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Miembro FI:</label>
+                                        {{form.user_fi(class="custom-select")}}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Miembro AM:</label>
+                                        {{form.user_am(class="custom-select")}}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Miembro LEAD:</label>
+                                        <select class="custom-select" disabled="true"><option>No</option></select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Miembro ORG:</label>
+                                        <select class="custom-select" disabled="true"><option>No</option></select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Miembro PM:</label>
+                                        <select class="custom-select" disabled="true"><option>No</option></select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Miembro QM:</label>
+                                        <select class="custom-select" disabled="true"><option>No</option></select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Miembro IIM:</label>
+                                        <select class="custom-select" disabled="true"><option>No</option></select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Miembro WPI:</label>
+                                        <select class="custom-select" disabled="true"><option>No</option></select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Miembro E&T:</label>
+                                        <select class="custom-select" disabled="true"><option>No</option></select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Miembro HSE:</label>
+                                        <select class="custom-select" disabled="true"><option>No</option></select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Miembro SN:</label>
+                                        <select class="custom-select" disabled="true"><option>No</option></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="auditor">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Leader Pillar Board</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Leader FI:</label>
+                                                    {{form.leader_fi(class="custom-select")}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Leader AM:</label>
+                                                    <select class="custom-select" disabled="true"><option>No</option></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Leader LEAD:</label>
+                                                    <select class="custom-select" disabled="true"><option>No</option></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Leader ORG:</label>
+                                                    <select class="custom-select" disabled="true"><option>No</option></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Leader PM:</label>
+                                                    <select class="custom-select" disabled="true"><option>No</option></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Leader QM:</label>
+                                                    <select class="custom-select" disabled="true"><option>No</option></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Leader IIM:</label>
+                                                    <select class="custom-select" disabled="true"><option>No</option></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Leader WPI:</label>
+                                                    <select class="custom-select" disabled="true"><option>No</option></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Leader E&T:</label>
+                                                    <select class="custom-select" disabled="true"><option>No</option></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Leader HSE:</label>
+                                                    <select class="custom-select" disabled="true"><option>No</option></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Leader SN:</label>
+                                                    <select class="custom-select" disabled="true"><option>No</option></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal">Guardar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer pt-0">
+        <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6">
+                <div class="copyright text-center  text-lg-left  text-muted">
+                    &copy; 2021 <a href="" class="font-weight-bold ml-1" target="_blank">Mondelez</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                    <li class="nav-item">
+                        <a href="" class="nav-link" target="_blank">Dashboard</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+{% endblock %}

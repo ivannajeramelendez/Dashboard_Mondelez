@@ -1,0 +1,443 @@
+{% extends "mainpages/page-layout.html" %}
+{% block title %}Edit{% endblock %}
+{% block contenido %}
+<!-- Page content -->
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card">
+        <div class="card-body">
+          {% for field, errors in form.errors.items() %}
+          <div class="alert alert-danger">
+            {{ form[field].label }}: {{ ', '.join(errors) }}
+          </div>
+          {% endfor %}
+          <form method="post">
+            {{ form.csrf_token }}
+            <div class="card-header">
+              <div class="row">
+                <div class="col-8">
+                  <h3 class="mb-0"><span class="badge badge-warning">Nuevo</span> - Team Capability Chart (SU Card)</h3>
+                </div>
+                <div class="col-4 text-right">
+                  <a href="{{url_for('pizarron_fi.tablero_fi_tcapability')}}" class="btn btn-sm btn-primary">Regresar</a>
+                  {{form.submit(class="btn btn-sm btn-warning", value="Guardar")}}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-6">
+                <div class="card bg-transparent">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="form-group">
+                          <label class="form-control-label">Usuario:</label>
+                          {{form.nombre(size="50",class="form-control form-control-sm")}}
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="form-control-label">Acreditación:</label>
+                          {{form.calificacion(class="form-control form-control-sm", id="calificacion", readonly=readonly)}}
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="form-control-label">Objetivo:</label>
+                          {{form.objetivo(class="form-control form-control-sm")}}
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="form-control-label">calificación:</label>
+                          {{form.acreditacion(class="form-control form-control-sm", id="acreditacion", readonly=readonly)}}
+                        </div>
+                      </div>
+                    </div>
+                    <p align="center">
+                      <h3 class="mb-0 text-muted">Pillar Step Up Card</h3>
+                    </p>
+                    <p align="center">
+                      <a class="btn btn-sm btn-primary text-white collapsed" data-toggle="collapse" data-target="#primer">
+                        Basic Concepts
+                      </a>
+                      <a class="btn btn-sm btn-primary text-white collapsed" data-toggle="collapse" data-target="#segundo">
+                        Loss Intelligence
+                      </a>
+                      <a class="btn btn-sm btn-primary text-white collapsed" data-toggle="collapse" data-target="#tercero">
+                        Loss Eradication
+                      </a>
+                      <a class="btn btn-sm btn-primary text-white collapsed" data-toggle="collapse" data-target="#cuarto">
+                        Loss Prevention
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-6">
+                <div class="card bg-transparent">
+                  <div class="card-body">
+                    <div id="data_calificacion_graph" style="height: 275px;"></div>
+                    <table id="data_calificacion" hidden>
+                      <thead class="table-dark">
+                        <tr align="center">
+                          <th>List</th>
+                          <th>Title</th>
+                          <th>Cal</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr align="center">
+                          <td>1</td>
+                          <td>Basic Concepts</td>
+                          <td>{{total_basic}}</td>
+                        </tr>
+                        <tr align="center">
+                          <td>2</td>
+                          <td>Loss Intelligence</td>
+                          <td>{{total_intelligence}}</td>
+                        </tr>
+                        <tr align="center">
+                          <td>3</td>
+                          <td>Loss Eradication</td>
+                          <td>{{total_eradication}}</td>
+                        </tr>
+                        <tr align="center">
+                          <td>4</td>
+                          <td>Loss Prevention</td>
+                          <td>{{total_prevention}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="accordion">
+              <div id="primer" class="collapse " data-parent="#accordion">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-xl-12">
+                      <div class="card table-responsive" style="width: 100%; height: 100%; ">
+                        <table class="table table-sm table-bordered" >
+                          <thead class="table-dark">
+                            <tr align="center">
+                              <th>Skill Group</th>
+                              <th>Skill / Knowledge / Task</th>
+                              <th>Checked</th>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <th class="bg-default text-white">Leader Checked</th>
+                              {% endif %}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td rowspan="5" align="center">Basic Concepts</td>
+                              <td>
+                                Can explain FI Pillar Goals, Objectives, Work Processes and Give & Gets with other Pillars
+                              </td>
+                              <td align="center">{{form_2.basic_1(class="form-control form-control-sm", id="basic_1", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.basic_1_leader(class="form-control form-control-sm", id="basic_1_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                            <tr>
+                              <td>
+                                Can articulate 3yr ZLJ, 1yr Master Plan and 90 day Action plan creation and deployment
+                              </td>
+                              <td align="center">{{form_2.basic_2(class="form-control form-control-sm", id="basic_2", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.basic_2_leader(class="form-control form-control-sm", id="basic_2_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                            <tr>
+                              <td>
+                                Pillar Board Design and Management based on PDCA
+                              </td>
+                              <td align="center">{{form_2.basic_3(class="form-control form-control-sm", id="basic_3", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.basic_3_leader(class="form-control form-control-sm", id="basic_3_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                            <tr>
+                              <td>
+                                Pillar Team Roles and Responsibilities
+                              </td>
+                              <td align="center">{{form_2.basic_4(class="form-control form-control-sm", id="basic_4", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.basic_4_leader(class="form-control form-control-sm", id="basic_4_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                            <tr>
+                              <td>
+                                Can understand DMS and it's intent
+                              </td>
+                              <td align="center">{{form_2.basic_5(class="form-control form-control-sm", id="basic_5", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.basic_5_leader(class="form-control form-control-sm", id="basic_5_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="segundo" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-xl-12">
+                      <div class="card table-responsive" style="width: 100%; height: 100%; ">
+                        <table class="table table-sm table-bordered" style="width: 100%; height: 100%;">
+                          <thead class="table-dark">
+                            <tr align="center">
+                              <th>Skill Group</th>
+                              <th>Skill / Knowledge / Task</th>
+                              <th>Checked</th>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <th class="bg-default text-white">Leader Checked</th>
+                              {% endif %}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td rowspan="5" align="center">Loss Intelligence</td>
+                              <td>
+                                Loss Analysis,Loss Tree and Productivity Cycle drumbeat (incl Volt application)
+                              </td>
+                              <td align="center">{{form_2.intelligence_1(class="form-control form-control-sm", id="intelligence_1", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.intelligence_1_leader(class="form-control form-control-sm", id="intelligence_1_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                            <tr>
+                              <td>
+                                Global waterfall GE/OEE Loss analysis (incl GWF, Rapid applications)
+                              </td>
+                              <td align="center">{{form_2.intelligence_2(class="form-control form-control-sm", id="intelligence_2", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.intelligence_2_leader(class="form-control form-control-sm", id="intelligence_2_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                            <tr>
+                              <td>
+                                Loss Map
+                              </td>
+                              <td align="center">{{form_2.intelligence_3(class="form-control form-control-sm", id="intelligence_3", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.intelligence_3_leader(class="form-control form-control-sm", id="intelligence_3_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                            <tr>
+                              <td>
+                                Value Stream Mapping
+                              </td>
+                              <td align="center">{{form_2.intelligence_4(class="form-control form-control-sm", id="intelligence_4", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.intelligence_4_leader(class="form-control form-control-sm", id="intelligence_4_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                            <tr>
+                              <td>
+                                3 Sigma Assessment (Capability assessment , MSA, Data collection systems etc.)
+                              </td>
+                              <td align="center">{{form_2.intelligence_5(class="form-control form-control-sm", id="intelligence_5", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.intelligence_5_leader(class="form-control form-control-sm", id="intelligence_5_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="tercero" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-xl-12">
+                      <div class="card table-responsive" style="width: 100%; height: 100%; ">
+                        <table class="table table-sm table-bordered" style="width: 100%; height: 100%;">
+                          <thead class="table-dark">
+                            <tr align="center">
+                              <th>Skill Group</th>
+                              <th>Skill / Knowledge / Task</th>
+                              <th>Checked</th>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <th class="bg-default text-white">Leader Checked</th>
+                              {% endif %}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td rowspan="7" align="center">Loss Eradication</td>
+                              <td>
+                                12 steps Problem Solving (SGA / YB) ( 6W+2H, Working Principle, Why-Why ,Fishbone/4 M Tools)
+                              </td>
+                              <td align="center">{{form_2.eradication_1(class="form-control form-control-sm", id="eradication_1", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.eradication_1_leader(class="form-control form-control-sm", id="eradication_1_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                            <tr>
+                              <td>
+                                " KAIZEN "System and Change Management process
+                              </td>
+                              <td align="center">{{form_2.eradication_2(class="form-control form-control-sm", id="eradication_2", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.eradication_2_leader(class="form-control form-control-sm", id="eradication_2_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                            <tr>
+                              <td>
+                                Single Minute Exchange of Dies (SMED) / Rapid Changeover Methodology
+                              </td>
+                              <td align="center">{{form_2.eradication_3(class="form-control form-control-sm", id="eradication_3", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.eradication_3_leader(class="form-control form-control-sm", id="eradication_3_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                            <tr>
+                              <td>
+                                6S Green Belt (DMAIC Project Mngt, Basic Stats - Normal Distribution, Averages, Multi vari chart, FMEA )
+                              </td>
+                              <td align="center">{{form_2.eradication_4(class="form-control form-control-sm", id="eradication_4", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.eradication_4_leader(class="form-control form-control-sm", id="eradication_4_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                            <tr>
+                              <td>
+                                6S Black Belt (DMAIC Project Mngt, Advanced Stats, DOE, Change Management )
+                              </td>
+                              <td align="center">{{form_2.eradication_5(class="form-control form-control-sm", id="eradication_5", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.eradication_5_leader(class="form-control form-control-sm", id="eradication_5_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                            <tr>
+                              <td>
+                                Lean Standard Work (Standard Work Combination Chart and Workload Balance Chart)
+                              </td>
+                              <td align="center">{{form_2.eradication_6(class="form-control form-control-sm", id="eradication_6", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.eradication_6_leader(class="form-control form-control-sm", id="eradication_6_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                            <tr>
+                              <td>
+                                Pull Replenishment (Repetitive Flexible Supply (RFS), Kanban) - Phase 2
+                              </td>
+                              <td align="center">{{form_2.eradication_7(class="form-control form-control-sm", id="eradication_7", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.eradication_7_leader(class="form-control form-control-sm", id="eradication_7_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="cuarto" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-xl-12">
+                      <div class="card table-responsive" style="width: 100%; height: 100%; ">
+                        <table class="table table-sm table-bordered" style="width: 100%; height: 100%;">
+                          <thead class="table-dark">
+                            <tr align="center">
+                              <th>Skill Group</th>
+                              <th>Skill / Knowledge / Task</th>
+                              <th>Checked</th>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <th class="bg-default text-white">Leader Checked</th>
+                              {% endif %}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td rowspan="5" align="center">Loss Prevention</td>
+                              <td>
+                                "5S Workplace Organization" system
+                              </td>
+                              <td align="center">{{form_2.prevention_1(class="form-control form-control-sm", id="prevention_1", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.prevention_1_leader(class="form-control form-control-sm", id="prevention_1_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                            <tr>
+                              <td>
+                                KAIZEN Replication & Loss Prevention System (incl. use of MP database)
+                              </td>
+                              <td align="center">{{form_2.prevention_2(class="form-control form-control-sm", id="prevention_2", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.prevention_2_leader(class="form-control form-control-sm", id="prevention_2_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                            <tr>
+                              <td>
+                                Statistical Process Control (e.g X-R, X-MR)
+                              </td>
+                              <td align="center">{{form_2.prevention_3(class="form-control form-control-sm", id="prevention_3", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.prevention_3_leader(class="form-control form-control-sm", id="prevention_3_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                            <tr>
+                              <td>
+                                Standardization inside SWP (CIL, Centerline,Mistake proofing, Visual Control Systems , Standard Work, Job Instructions, OPLs,)
+                              </td>
+                              <td align="center">{{form_2.prevention_4(class="form-control form-control-sm", id="prevention_4", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.prevention_4_leader(class="form-control form-control-sm", id="prevention_4_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                            <tr>
+                              <td>
+                                Single Line Control Plans
+                              </td>
+                              <td align="center">{{form_2.prevention_5(class="form-control form-control-sm", id="prevention_5", oninput="calculo()")}}</td>
+                              {% if current_user.is_admin() or current_user.is_leader_fi() %}
+                              <td align="center">{{form_2.prevention_5_leader(class="form-control form-control-sm", id="prevention_5_leader", oninput="calculo_leader()")}}</td>
+                              {% endif %}
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer class="footer pt-0">
+    <div class="row align-items-center justify-content-lg-between">
+      <div class="col-lg-6">
+        <div class="copyright text-center text-lg-left text-muted">
+          &copy; 2021
+          <a href="" class="font-weight-bold ml-1" target="_blank">Mondelez</a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <ul
+          class="nav nav-footer justify-content-center justify-content-lg-end"
+        >
+          <li class="nav-item">
+            <a href="" class="nav-link" target="_blank">Dashboard</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+{% endblock %}

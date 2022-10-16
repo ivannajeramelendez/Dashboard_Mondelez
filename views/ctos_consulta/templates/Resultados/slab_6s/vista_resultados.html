@@ -1,0 +1,120 @@
+{% extends "layout.html" %}
+{% block title %}Resultados CTO's{% endblock %}
+{% block content %}
+<div class="container-fluid mt--4">
+  <div class="row justify-content-center">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">Registro <span class="badge badge-info">Cto's</span></h3>
+                </div>
+                <div class="col-4 text-right">
+                {% if current_user.is_authenticated() %}
+                <a class="btn btn-primary btn-sm" href="{{url_for('ctos_consulta.cto_consulta_slab_6s_graph')}}" role="button">Todo 6's</a>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+          <!-- INICIO CARD -->
+          <div class="row">
+
+            <div class="col-md-12">
+              <h3>Registro:</h3>
+              <div class="card table-responsive">
+                <table class="table" id="busqueda_filtro_completo">
+                  <thead class="table-dark">
+                    <tr>
+                      <th>Fecha</th>
+                      <th>Turno</th>
+                      <th>Ge</th>
+                      <th>Linea</th>
+                      <th>Sección</th>
+                      <th>Area</th>
+                      {% if current_user.is_authenticated() %}
+                      <th>View</th>
+                      {% endif %}
+                    </tr>
+                  </thead>
+                  {% for Registro in registro %}
+                  <tr>
+                    <td>{{Registro.fecha}}</td>
+                    <td>{{Registro.turno}}</td>
+                    <td>% {{Registro.ge}}</td>
+                    <td>{{Registro.linea}}</td>
+                    <td>{{Registro.seccion}}</td>
+                    <td>{{Registro.area}}</td>
+                    {% if current_user.is_authenticated %}
+                    <td><a href="{{url_for('ctos_consulta.cto_consulta_slab_6s_registros_view',id=Registro.id)}}" class="btn btn-primary btn-sm">View</a></td>
+                    {% endif %}
+                  </tr>
+                  {% endfor %}
+                  {% for Registro_2 in registro_2 %}
+                  <tr>
+                    <td>{{Registro_2.fecha}}</td>
+                    <td>{{Registro_2.turno}}</td>
+                    <td>% {{Registro_2.ge}}</td>
+                    <td>{{Registro_2.linea}}</td>
+                    <td>{{Registro_2.seccion}}</td>
+                    <td>{{Registro_2.area}}</td>
+                    {% if current_user.is_authenticated %}
+                    <td><a href="{{url_for('ctos_consulta.cto_consulta_slab_6s_registros_view_l2',id=Registro_2.id)}}" class="btn btn-primary btn-sm">View</a></td>
+                    {% endif %}
+                  </tr>
+                  {% endfor %}
+                  {% for Registro_3 in registro_3 %}
+                  <tr>
+                    <td>{{Registro_3.fecha}}</td>
+                    <td>{{Registro_3.turno}}</td>
+                    <td>% {{Registro_3.ge}}</td>
+                    <td>{{Registro_3.linea}}</td>
+                    <td>{{Registro_3.seccion}}</td>
+                    <td>{{Registro_3.area}}</td>
+                    {% if current_user.is_authenticated %}
+                    <td><a href="{{url_for('ctos_consulta.cto_consulta_slab_6s_registros_view_l3',id=Registro_3.id)}}" class="btn btn-primary btn-sm">View</a></td>
+                    {% endif %}
+                  </tr>
+                  {% endfor %}
+                  {% for Registro_4 in registro_4 %}
+                  <tr>
+                    <td>{{Registro_4.fecha}}</td>
+                    <td>{{Registro_4.turno}}</td>
+                    <td>% {{Registro_4.ge}}</td>
+                    <td>{{Registro_4.linea}}</td>
+                    <td>{{Registro_4.seccion}}</td>
+                    <td>{{Registro_4.area}}</td>
+                    {% if current_user.is_authenticated %}
+                    <td><a href="{{url_for('ctos_consulta.cto_consulta_slab_6s_registros_view_l4',id=Registro_4.id)}}" class="btn btn-primary btn-sm">View</a></td>
+                    {% endif %}
+                  </tr>
+                  {% endfor %}
+                </table>
+              </div>
+            </div>
+            <!-- FIN CARD -->
+          </div>
+        </div>
+      </div>
+      <!-- Footer -->
+      <footer class="footer pt-0">
+          <div class="row align-items-center justify-content-lg-between">
+              <div class="col-lg-6">
+                  <div class="copyright text-center  text-lg-left  text-muted">
+                      &copy; 2021 <a href="" class="font-weight-bold ml-1" target="_blank">Mondelez</a>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                      <li class="nav-item">
+                          <a href="" class="nav-link" target="_blank">Dashboard</a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </footer>
+    </div>
+  </div>
+</div>
+{% endblock %}

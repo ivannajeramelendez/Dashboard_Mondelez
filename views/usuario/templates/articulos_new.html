@@ -1,0 +1,96 @@
+{% extends "mainpages/page-layout.html" %}
+{% block title %}New{% endblock %}
+{% block contenido %}
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <!-- <div class="col-xl-4 order-xl-2"></div> -->
+        <div class="col-xl-12 order-xl-1">
+            <div class="card">
+                <div class="card-body">
+                    {% for field, errors in form.errors.items() %}
+                    <div class="alert alert-danger">
+                    {{ form[field].label }}: {{ ', '.join(errors) }}
+                    </div>
+                    {% endfor %}
+                    <form method="post">
+                        {{ form.csrf_token }}
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <h3 class="mb-0">Nueva Publicación</h3>
+                                </div>
+                                <div class="col-4 text-right">
+                                    {{form.submit(class="btn btn-warning", value="Publicar")}}
+                                </div>
+                            </div>
+                        </div>
+                        <h6 class="heading-small text-muted mb-4">Información</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-first-name">Asunto:</label>
+                                        {{form.nombre(size="100",class="form-control form-control-sm", placeholder="Asunto")}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-first-name">Hora:</label>
+                                        {{form.horario(class="form-control form-control-sm", type="time", value="09:00:00",
+                                        id="example-time-input")}}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-first-name">Fecha:</label>
+                                        {{form.fecha(class="form-control form-control-sm", type="date",
+                                        id="example-date-input")}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-first-name">Descripción:</label>
+                                        {{form.descripcion(rows="2",cols="30",class="form-control form-control-sm",
+                                        placeholder="Describe Aquí el topico")}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-first-name">Categoria:</label>
+                                        {{form.CategoriaId(class="form-control form-control-sm")}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer pt-0">
+        <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6">
+                <div class="copyright text-center  text-lg-left  text-muted">
+                    &copy; 2021 <a href="" class="font-weight-bold ml-1" target="_blank">Mondelez</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                    <li class="nav-item">
+                        <a href="" class="nav-link" target="_blank">Dashboard</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+</div>
+{% endblock %}

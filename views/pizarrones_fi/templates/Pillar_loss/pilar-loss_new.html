@@ -1,0 +1,114 @@
+{% extends "mainpages/page-layout.html" %}
+{% block title %}New{% endblock %}
+{% block contenido %}
+<!-- Page content -->
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card">
+        <div class="card-body">
+          {% for field, errors in form.errors.items() %}
+          <div class="alert alert-danger">
+            {{ form[field].label }}: {{ ', '.join(errors) }}
+          </div>
+          {% endfor %}
+          <form method="post">
+            {{ form.csrf_token }}
+            <div class="card-header">
+              <div class="row">
+                <div class="col-8">
+                  <h3 class="mb-0">
+                    <span class="badge badge-warning">Nuevo</span> - Pilar Loss Map
+                  </h3>
+                </div>
+                <div class="col-4 text-right">
+                  {{form.enviar(class="btn btn-sm btn-warning", value="Agregar")}}
+                </div>
+              </div>
+            </div>
+            <h6 class="heading-small text-muted mb-4">Información</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label">Tema o Modelo</label>
+                    {{form.tema(class="form-control form-control-sm", placeholder="Tema")}}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label">Responsable</label>
+                    {{form.responsable(class="form-control form-control-sm", placeholder="Responsable")}}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label">Objetivo</label>
+                    {{form.objetivo(class="form-control form-control-sm", placeholder="Objetivo")}}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label">Estado Actual</label>
+                    {{form.estadoactual(class="form-control form-control-sm", placeholder="Estado Actual")}}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label">Estado Futuro</label>
+                    {{form.estadofuturo(class="form-control form-control-sm", placeholder="Estado Futuro")}}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label">Planes de Acción</label>
+                    {{form.planesdeaccion(class="form-control
+                    form-control-sm", placeholder="Planes de Acción")}}
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label">Fecha</label>
+                    {{form.fecha(class="form-control form-control-sm",
+                    type="date", id="example-date-input")}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer class="footer pt-0">
+    <div class="row align-items-center justify-content-lg-between">
+      <div class="col-lg-6">
+        <div class="copyright text-center text-lg-left text-muted">
+          &copy; 2021
+          <a href="" class="font-weight-bold ml-1" target="_blank">Mondelez</a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <ul
+          class="nav nav-footer justify-content-center justify-content-lg-end"
+        >
+          <li class="nav-item">
+            <a href="" class="nav-link" target="_blank">Dashboard</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+{% endblock %}

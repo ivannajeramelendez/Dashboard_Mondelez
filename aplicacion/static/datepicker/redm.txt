@@ -1,0 +1,17 @@
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/daterangepicker/daterangepicker.css') }}">
+<!--===============================================================================================-->
+
+<div class="wrap-input100 validate-input" data-validate = "Age is required: 20">
+	<input class="input100" id="edad" type="date" name="edad" placeholder="Date">
+	<label class="label-input100" for="edad">
+		<span class="lnr lnr-calendar-full"></span>
+	</label>
+</div>
+
+<!--===============================================================================================-->
+	<script src="{{ url_for('static', filename='vendor/daterangepicker/moment.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='vendor/daterangepicker/daterangepicker.js') }}"></script>
+<!--===============================================================================================-->
+
+

@@ -1,0 +1,574 @@
+{% extends "layout.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block contenido %}
+<!-- INICIO HEAD TARJETAS -->
+  <div class="header bg-primary pb-6">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row py-4">
+          <div class="col">
+          </div>
+          <div class="col text-right">
+            <a href="{{url_for('menus.menu_inicio_ctos')}}" class="btn btn-sm btn-primary">
+              <span class="badge badge-default">Regresar</span>
+            </a>
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+              <!-- Card body CTO -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Cto's</h5>
+                    <span class="h2 font-weight-bold mb-0">{{cto_totales|length}}</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                      <i class="far fa-file-alt"></i>
+                    </div>
+                  </div>
+                </div>
+                <p class="mt-3 mb-0 text-sm">
+                  <span class="text-primary mr-2"><i class="fa fa-arrow-up"></i> </span>
+                  <span class="text-nowrap">Registros Totales</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+              <!-- Card body USERS -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Usuarios</h5>
+                    <span class="h2 font-weight-bold mb-0">{{usuarios_totales|length}}</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                      <i class="fas fa-user-plus"></i>
+                    </div>
+                  </div>
+                </div>
+                <p class="mt-3 mb-0 text-sm">
+                  <span class="text-primary mr-2"><i class="fa fa-arrow-up"></i> </span>
+                  <span class="text-nowrap">Registros Totales</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+              <!-- Card body SKU -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Sku</h5>
+                    <span class="h2 font-weight-bold mb-0">{{sku_totales|length}}</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                      <i class="fas fa-barcode"></i>
+                    </div>
+                  </div>
+                </div>
+                <p class="mt-3 mb-0 text-sm">
+                  <span class="text-primary mr-2"><i class="fa fa-arrow-up"></i> </span>
+                  <span class="text-nowrap">Registros Totales</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+              <!-- Card body LINEAS -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Lineas</h5>
+                    <span class="h2 font-weight-bold mb-0">{{lineas_totales|length}}</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                      <i class="fas fa-bezier-curve"></i>
+                    </div>
+                  </div>
+                </div>
+                <p class="mt-3 mb-0 text-sm">
+                  <span class="text-primary mr-2"><i class="fa fa-arrow-up"></i></span>
+                  <span class="text-nowrap">Registros Totales</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- FIN HEAD TARJETAS -->
+<!-- Page content -->
+  <div class="container-fluid mt--6">
+    <div class="row">
+      <div class="col-xl-7">
+        <div class="card bg-translucent">
+          <div class="card-header bg-transparent">
+            <div class="row">
+              <div class="col">
+                <h6 class="text-dark text-uppercase ls-1 mb-1">Ge Share</h6>
+                <h5 class="h3 text-dark mb-0">CTO's Capturados</h5>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart">
+                <div id="ge_ctos_graph" style="width: 100%; height: 100%; "></div>
+                <!-- INCIO Ge CTOs -->
+                <table class="table" id="ge_ctos" hidden>
+                  <thead>
+                    <tr>
+                      <th>Share</th>
+                      <th>Porcentaje</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Ge</td>
+                      <td>{{resul_ge}}</td>
+                    </tr>
+                    <tr>
+                      <td>No Planned</td>
+                      <td>{{no_planned_graph}}</td>
+                    </tr>
+                    <tr>
+                      <td>Planned</td>
+                      <td>1</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- FIN -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-5">
+        <div class="card bg-translucent">
+          <div class="card-header bg-transparent">
+            <div class="row">
+              <div class="col">
+                <h6 class="text-dark text-uppercase ls-1 mb-1">Failure</h6>
+                <h5 class="h3 mb-0 text-dark">Failure Modes</h5>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart">
+                <div id="falla_ctos_graph" style="width: 100%; height: 100%; "></div>
+                <!-- INCIO Lineas -->
+                <table class="table" id="falla_ctos" hidden>
+                  <thead>
+                    <tr>
+                      <th>Modos</th>
+                      <th>Frecuencia</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for Paros in fallas_graph %}
+                    <tr>
+                      <td>{{Paros.falla}}</td>
+                      <td>{{Paros.frec}}</td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+                <!-- FIN -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-12">
+        <div class="card bg-translucent">
+          <div class="card-header bg-transparent">
+            <div class="row align-items-center">
+              <div class="col">
+                <h6 class="text-dark text-uppercase ls-1 mb-1">GE Loss by GWF Loss</h6>
+                <h5 class="h3 mb-0 text-dark">GWF Loss</h5>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart">
+                <div id="gwf_loss_ge_graph" style="width: 100%; height: 100%; "></div>
+                <!-- INCIO Lineas -->
+                <table class="table" id="gwf_loss_ge" hidden>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Loss</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Paro Operacional</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>Retraso de Linea</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>Cambios de Sabor</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>Sanitización</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>Paros Menores</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Inicio y Fin de Prod</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Reemplazo de consumibles</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Averías</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Pérdida de Calidad</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>AM</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Perdida adminis.</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Mante. Programado</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Perdida por Vel</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Paros Planeados</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Falta de Materiales</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- FIN -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-5">
+        <div class="card bg-translucent">
+          <div class="card-header bg-transparent">
+            <div class="row align-items-center">
+              <div class="col">
+                <h6 class="text-dark text-uppercase ls-1 mb-1">By Area</h6>
+                <h5 class="h3 mb-0 text-dark">Loss Area</h5>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart">
+                <div id="area_ctos_graph" style="width: 100%; height: 100%; "></div>
+                <!-- INCIO Lineas -->
+                <table class="table" id="area_ctos" hidden>
+                    <thead>
+                        <tr>
+                            <th>Area</th>
+                            <th>Frecuencia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                          <td>Trident Slab</td>
+                          <td>{{area_loss_graph}}</td>
+                      </tr>
+                      <tr>
+                          <td>Trident 4s</td>
+                          <td>0</td>
+                      </tr>
+                      <tr>
+                          <td>Sugar Pellet Emp</td>
+                          <td>0</td>
+                      </tr>
+                      <tr>
+                          <td>SFP Blister</td>
+                          <td>0</td>
+                      </tr>
+                      <tr>
+                          <td>PBs Emp</td>
+                          <td>0</td>
+                      </tr>
+                      <tr>
+                          <td>Halls Stick</td>
+                          <td>0</td>
+                      </tr>
+                      <tr>
+                          <td>Halls 1s</td>
+                          <td>0</td>
+                      </tr>
+                      <tr>
+                          <td>EVUP</td>
+                          <td>0</td>
+                      </tr>
+                      <tr>
+                          <td>CLG</td>
+                          <td>0</td>
+                      </tr>
+                      <tr>
+                          <td>CFP Blister</td>
+                          <td>0</td>
+                      </tr>
+                      <tr>
+                          <td>Bubbalo</td>
+                          <td>0</td>
+                      </tr>
+                    </tbody>
+                </table>
+                <!-- FIN -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-7">
+        <div class="card bg-translucent">
+          <div class="card-header bg-transparent">
+            <div class="row align-items-center">
+              <div class="col">
+                <h6 class="text-dark text-uppercase ls-1 mb-1">By Line</h6>
+                <h5 class="h3 mb-0 text-dark">Loss Line</h5>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart">
+                <div id="line_ctos_graph" style="width: 100%; height: 100%; "></div>
+                <!-- INCIO Lineas -->
+                <table class="table" id="line_ctos" hidden>
+                    <thead>
+                        <tr>
+                            <th>Linea</th>
+                            <th>Frecuencia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Slab 1's</td>
+                            <td>7</td>
+                        </tr>
+                        <tr>
+                            <td>Slab 6's</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>Slab 3's</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Five Stick</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>EVUP</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Trident 4s</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Max Air</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>CL6</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Halls</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Halls 1's</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Bubba</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>PB's</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Clorets 30's</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Clorets 2's</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Marcherssinis CFP</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Marcherssinis SFP</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                          <td>Chiclets 100s</td>
+                          <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- FIN -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xl-8">
+        <div class="card">
+          <div class="card-header border-0">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="mb-0">Cto Caputrados</h3>
+              </div>
+              <div class="col text-right">
+                <a href="/menu/inicio/ctos/Slab1s/prototype_2/consulta" class="btn btn-sm btn-primary">Ver todos</a>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <!-- Projects table -->
+            <table class="table align-items-center table-flush">
+              <thead class="table-dark">
+                <tr>
+                  <th>Fecha</th>
+                  <th>Linea</th>
+                  <th>Area</th>
+                  <th>Ge</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for Cto in cto %}
+                <tr>
+                  <th scope="row">
+                    {{Cto.fecha}}
+                  </th>
+                  <td>
+                    {{Cto.linea}}
+                  </td>
+                  <td>
+                    {{Cto.area}}
+                  </td>
+                  <td>
+                    <i class="fas fa-arrow-up text-success mr-3"></i> {{Cto.ge}}%
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4">
+        <div class="card">
+          <div class="card-header border-0">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="mb-0">Usuarios</h3>
+              </div>
+              <div class="col text-right">
+                <a href="#" class="btn btn-sm btn-primary">Ver Todo</a>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <!-- Projects table -->
+            <table class="table align-items-center table-flush">
+              <thead class="table-dark">
+                <tr>
+                  <th>Nombre</th>
+                  <th>Correo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for User in user %}
+                <tr>
+                  <th scope="row">
+                    {{User.nombre}}
+                  </th>
+                  <td>
+                    {{User.email}}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer pt-0">
+      <div class="row align-items-center justify-content-lg-between">
+        <div class="col-lg-6">
+          <div class="copyright text-center  text-lg-left  text-muted">
+            &copy; 2021
+            <a href="" class="font-weight-bold ml-1" target="_blank">Mondelez</a>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <ul
+            class="nav nav-footer justify-content-center justify-content-lg-end"
+          >
+            <li class="nav-item">
+              <a href="" class="nav-link" target="_blank"></a>
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link" target="_blank"></a>
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link" target="_blank"></a>
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link" target="_blank">Mondelez</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </div>
+{% endblock %}

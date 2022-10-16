@@ -1,0 +1,105 @@
+{% extends "mainpages/page-layout.html" %}
+{% block title %}New{% endblock %}
+{% block contenido %}
+<!-- Page content -->
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-xl-4 order-xl-2">
+      <div class="card card-profile">
+        <img src="{{ url_for('static', filename='img/theme/team-4.png') }}" alt="Image placeholder"
+          class="card-img-top">
+        <div class="row justify-content-center">
+          <div class="col-lg-3 order-lg-2">
+            <div class="card-profile-image">
+              <a href="#">
+                <!-- {% for art in articulos %}
+                  {% if art.image %}
+                  <img src="{{url_for('static',filename='upload/')}}{{art.image}}" class="rounded-circle">
+                  {% else %}
+                  <img src="{{url_for('static',filename='upload/not-found.png')}}" class="rounded-circle">
+                  {% endif %}
+                  {% endfor %} -->
+                <img src="{{url_for('static',filename='img/theme/perfil.png')}}" class="rounded-circle">
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+          <div class="d-flex justify-content-between">
+            <a href="#" class="btn btn-sm btn-default float-right">Mensaje</a>
+          </div>
+        </div>
+        <div class="card-body pt-0">
+          <div class="text-center">
+            <h5 class="h3">
+              {{ current_user.nombre}}
+              <!-- Admin: {{ current_user.admin}}  -->
+            </h5>
+            <div class="h5 font-weight-300">
+              <i class="ni location_pin mr-2"></i>México, Puebla
+            </div>
+            <div>
+              <i class="ni education_hat mr-2"></i><span class="badge badge-default"> Mondelez</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-8 order-xl-1">
+      <div class="card">
+        <div class="card-body">
+          <form method="post">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">Editar perfil</h3>
+                </div>
+                <div class="col-4 text-right">
+								  <a class="btn btn-primary btn-sm" href="{{url_for('menus.menu_inicio')}}" role="button">Regresar</a>              
+                  {{form.submit(class="btn btn-sm btn-warning")}}
+                </div>
+              </div>
+            </div>
+            <h6 class="heading-small text-muted mb-4">Informacion del usuario</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Usuario</label>
+                    {{ form.csrf_token }}
+                    {% if not perfil %}
+                    {{form.username(size="100",class="form-control", placeholder="Usuario")}}<br />
+                    {% else %}
+                    {{form.username(readonly="readonly",class="form-control", placeholder="Usuario")}}<br />
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">Correo</label>
+                    {{form.email(size="100",class="form-control", placeholder="Correo")}}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-first-name">Nombre</label>
+                    {{form.nombre(size="100",class="form-control", placeholder="Nombre Completo")}}
+                  </div>
+                </div>
+              </div>
+              {% if not perfil %}
+              {{form.password(size="100",class="form-control", placeholder="Contraseña")}}<br />
+              {% else %}
+              <a href="/changepassword/{{ current_user.username}}">Cambiar contraseña</a><br />
+              {% endif %}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}
